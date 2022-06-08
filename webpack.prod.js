@@ -1,11 +1,10 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const APIServerConfig = require('./host.config');
 
-let dist = "./dist";
+let dist = "../iot-server/client";
 module.exports = {
-  mode: 'development', // or 'production'
+  mode: 'production',
   entry: {
     main: './src/jsx/index.jsx',
   },
@@ -42,19 +41,11 @@ module.exports = {
         loader: 'string-replace-loader',
         options: {
           search: '$API',
-          replace: APIServerConfig.development.url +':'+APIServerConfig.development.port,
+          replace: APIServerConfig.production.url +':'+APIServerConfig.production.port,
         }
       }
+
     ]
-  },
-  //給devserver的設定
-  devServer: {
-    static: {
-      directory: path.join(__dirname, './dist'),
-    },
-    historyApiFallback: true,
-    open: true,
-    port: 8080
   },
   plugins: [ 
     new CopyPlugin({

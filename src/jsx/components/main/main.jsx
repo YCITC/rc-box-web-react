@@ -2,14 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {LogComponent} from '../log/log.jsx';
 
-import styled from 'styled-components';
 import './main.scss'
-
-const H2o = styled.h1` // => Define  <h1> style，name: H2o
-  color: green;
-  font-size: 20px;
-`
-
 
 
 export function Main() {
@@ -17,18 +10,18 @@ export function Main() {
 
   useEffect(()=>{
     getLogs();
-    console.log("init useEffect");
+    // console.log("init useEffect");
   },[]);
 
-  useEffect(()=>{
-    console.log("Logs has be changed")
-  },[logs]);
+  // useEffect(()=>{
+  //   console.log("Logs has be changed")
+  // },[logs]);
 
   const getLogs= ()=>{
-    axios.get('http://localhost:3000/log')
+    axios.get('$API/log')
       .then((response)=>{
         // console.log('response: ', response)
-        console.log('response.data: ', response.data)
+        // console.log('response.data: ', response.data)
         let logArray = [];
         for(var i=0; i<response.data.length; i++) {
           response.data[i]["ISOtime"] = response.data[i].time;
@@ -44,10 +37,10 @@ export function Main() {
 
   return (
     <div className="main">
-      <h1 className="h1"> 收貨記錄 </h1>
-      {/* <div className="">
-        <H2o>This line is styled-components </H2o>
-      </div> */}
+      <div className="">
+        <h1 className="h1"> 收貨記錄 </h1>
+        
+      </div>
       <div className="wrapper">
         <div className="serialId">流水號</div>
         <div className="time">收貨時間</div>

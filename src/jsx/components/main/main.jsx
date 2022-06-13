@@ -17,6 +17,12 @@ export function Main() {
   //   console.log("Logs has be changed")
   // },[logs]);
 
+  const subScribe = () => {
+    if ('serviceWorker' in navigator && 'PushManager' in window) {
+      console.log('Service Worker and Push is supported');
+
+    }
+  }
   const getLogs= ()=>{
     axios.get('$API/log')
       .then((response)=>{
@@ -39,7 +45,7 @@ export function Main() {
     <div className="main">
       <div className="">
         <h1 className="h1"> 收貨記錄 </h1>
-        
+        <button className="subscribe" onClick={subScribe}>接收通知</button>
       </div>
       <div className="wrapper">
         <div className="serialId">流水號</div>

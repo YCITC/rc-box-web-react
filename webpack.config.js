@@ -13,6 +13,11 @@ module.exports = {
     filename: './js/[name].bundle.js',
     path: path.resolve(__dirname, dist),
   }, 
+  // target: 'node',
+  // fallback: {
+  //   https: false,
+  //   // https: require.resolve('https-browserify'),
+  // },
   //將loader的設定寫在module的rules屬性中
   module: {
     //rules的值是一個陣列可以存放多個loader物件
@@ -60,7 +65,8 @@ module.exports = {
     new CopyPlugin({
       patterns:[
         // 這次的例子中copy to的目標path會基於output.path的路徑之下
-        {from: './src/html/index.html', to: './'},
+        {from: './src/static/index.html', to: './'},
+        {from: './src/static/sw.js', to: './'},
       ]
     })
   ],

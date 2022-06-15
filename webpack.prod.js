@@ -51,7 +51,8 @@ module.exports = {
     new CopyPlugin({
       patterns:[
         // 這次的例子中copy to的目標path會基於output.path的路徑之下
-        {from: './src/html/index.html', to: './'},
+        {from: './src/static/index.html', to: './'},
+        {from: './src/static/sw.js', to: './'},
       ]
     })
   ],

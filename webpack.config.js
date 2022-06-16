@@ -1,7 +1,6 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const APIServerConfig = require('./host.config');
 
 let dist = "./dist";
 module.exports = {
@@ -42,14 +41,6 @@ module.exports = {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
-      {
-        test: /\.jsx$/,
-        loader: 'string-replace-loader',
-        options: {
-          search: '$API',
-          replace: APIServerConfig.development.url +':'+APIServerConfig.development.port,
-        }
-      }
     ]
   },
   //給devserver的設定
@@ -59,7 +50,11 @@ module.exports = {
     },
     historyApiFallback: true,
     open: true,
-    port: 8080
+    port: 8080,
+    proxy: {
+      '/push': 'http://localhost:3000',
+      '/log': 'http://localhost:3000'
+    }
   },
   plugins: [ 
     new CopyPlugin({
@@ -67,6 +62,7 @@ module.exports = {
         // 這次的例子中copy to的目標path會基於output.path的路徑之下
         {from: './src/static/index.html', to: './'},
         {from: './src/static/sw.js', to: './'},
+        {from: './src/static/269C527184CD60B9DED8D85751EB32D5.txt', to: './'},
       ]
     })
   ],

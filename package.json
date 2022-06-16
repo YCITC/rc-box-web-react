@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "build": "webpack --config webpack.prod.js",
+    "build-dev": "webpack --config webpack.config.js",
     "dev": "webpack-dev-server"
   },
   "repository": "https://github.com/yesseecity/simple-react-project.git",

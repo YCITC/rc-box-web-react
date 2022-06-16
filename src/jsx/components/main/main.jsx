@@ -38,18 +38,11 @@ export function Main() {
 
       navigator.serviceWorker.register('sw.js')
       .then(function(swReg) {
-        console.clear();
-        console.log('Service Worker is registered', swReg);
+        let browserInfo = getBrowserInfo();
 
-
-        // axios.get('$API/push/genVAPID')
-        axios.get('http://localhost:3000/push/genVAPID')
+        axios.get('/push/genVAPID/'+browserInfo.name)
         .then((response)=>{
-          console.log("genVAPID");
-          console.log(response.data);
           const vapid = response.data;
-          // publicKey
-          // privateKey
           subscribeUser(swReg, vapid);
         })
         .catch((error)=>{
@@ -84,8 +77,7 @@ export function Main() {
         "keysP256dh": jObj.keys.p256dh,
       }
       
-      // axios.post('$API/push/subscribe')
-      axios.post('http://localhost:3000/push/subscribe', pushKeys)
+      axios.post('/push/subscribe', pushKeys)
         .then((response)=>{
           console.log('response: ', response);
         })
@@ -119,8 +111,7 @@ export function Main() {
   }
 
   const getLogs = ()=>{
-    // axios.get('$API/log')
-    axios.get('http://localhost:3000/log')
+    axios.get('/log')
       .then((response)=>{
         // console.log('response: ', response)
         // console.log('response.data: ', response.data)

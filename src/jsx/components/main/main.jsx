@@ -110,18 +110,26 @@ export function Main() {
     return bowserInfo;
   }
 
+  const compare = ( a, b )=>{
+    return (b.id - a.id);
+  }
+  
   const getLogs = ()=>{
     axios.get('/log')
       .then((response)=>{
         // console.log('response: ', response)
         // console.log('response.data: ', response.data)
+
+        response.data.sort(compare);
+        // response.data.sort((a, b)=>{b.id - a.id});
         let logArray = [];
         for(var i=0; i<response.data.length; i++) {
           response.data[i]["ISOtime"] = response.data[i].time;
           response.data[i].time = new Date(response.data[i].time);
           logArray.push((<LogComponent {...response.data[i]} key={response.data[i].id}/>))
         }
-        setLogs(logArray.reverse());
+        // setLogs(logArray.reverse());
+        setLogs(logArray);
       })
       .catch((error)=>{
         console.error('error: ', error);

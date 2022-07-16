@@ -66,8 +66,9 @@ export function Main() {
       let browserInfo = getBrowserInfo();
       let jString = JSON.stringify(subscription);
       let jObj = JSON.parse(jString);
-      let pushKeys = {
+      let registerPushInfo = {
         "deviceId": "rc-box-581",
+        "clientType": "browser",
         "browserName": browserInfo.name,
         "browserVersion": browserInfo.version,
         "vapidPublicKey":  vapid.publicKey,
@@ -77,7 +78,7 @@ export function Main() {
         "keysP256dh": jObj.keys.p256dh,
       }
       
-      axios.post('/push/subscribe', pushKeys)
+      axios.post('/push/subscribe', registerPushInfo)
         .then((response)=>{
           console.log('response: ', response);
         })

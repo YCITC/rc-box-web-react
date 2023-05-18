@@ -62,6 +62,8 @@ module.exports = {
         // 這次的例子中copy to的目標path會基於output.path的路徑之下
         {from: './src/static/index.html', to: './'},
         {from: './src/static/sw.js', to: './'},
+
+        // 認證domain name 用的
         {from: './src/static/269C527184CD60B9DED8D85751EB32D5.txt', to: './'},
       ]
     })

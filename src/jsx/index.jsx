@@ -7,6 +7,7 @@ const defaultTheme = createTheme();
 
 // components
 import { Main } from './pages/main/main.jsx';
+import SignIn from './pages/SignIn.jsx';
 import SignUp from './pages/SignUp.jsx';
 import LandingPage from './pages/landing.jsx';
 
@@ -16,6 +17,7 @@ function Index(props) {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Main />} />
+          <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/landing" element={<LandingPage />} />
         </Routes>

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import {LogComponent} from '../log/log.jsx';
+import {LogComponent} from '../../components/log/log.jsx';
+import Copyright from '../../components/Copyright.jsx';
 
 import './main.scss'
 
@@ -9,7 +10,7 @@ export function Main() {
   const [logs, setLogs] = useState([]);
 
   useEffect(()=>{
-    getLogs();
+    // getLogs();
     // console.log("init useEffect");
   },[])
 
@@ -149,6 +150,7 @@ export function Main() {
         <div className="deviceId">收貨裝置</div>
         {logs}
       </div>
+      <Copyright sx={{ mt: 5 }} />
     </div>
   );
 }

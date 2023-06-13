@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Archive, Input, Button} from '@mui/icons-material';
@@ -16,7 +16,7 @@ import { SideNavItem } from './side-nav-item.jsx';
 
 export const SideNav = (props) => {
   const location = useLocation();
-  const { open, onClose } = props;
+  const { open } = props;
   const pathname = location.pathname;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 
@@ -143,16 +143,6 @@ export const SideNav = (props) => {
         >
         </Box>
         <Divider sx={{ borderColor: 'neutral.700' }} />
-        <Stack>
-        {/* <Button variant="contained" href="/">close nav</Button> */}
-        {/* <Button variant="contained" 
-          color="primary"
-          sx={{ p: 2, border: '1px dashed grey', width: '100%', fontSize: '24px'}} 
-          href="/signup">
-          SIGN UP
-        </Button> */}
-        {/* <button >close nav</button> */}
-        </Stack>
       </Box>
     </Scrollbar>
   );
@@ -160,7 +150,6 @@ export const SideNav = (props) => {
   return (
     <Drawer
       anchor="left"
-      onClose={onClose}
       open={open}
       PaperProps={{
         sx: {
@@ -170,7 +159,7 @@ export const SideNav = (props) => {
         }
       }}
       sx={lgUp?{}:{ zIndex: (theme) => theme.zIndex.appBar + 100 }}
-      variant={lgUp?"permanent":"temporary"}
+      variant={open?"permanent":"temporary"}
     >
       {content}
     </Drawer>

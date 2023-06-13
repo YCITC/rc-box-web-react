@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {LogComponent} from '../../components/log/log.jsx';
-// import SidebarLayout from '../../layouts/sidebar.jsx';
+import { Drawer, Button, Box } from '@mui/material';
+
 import './main.scss'
 
 export default function Main() {
@@ -9,7 +10,7 @@ export default function Main() {
 
   useEffect(()=>{
     // getLogs();
-    // console.log("init useEffect");
+    console.log("init useEffect");
   },[])
 
   // useEffect(()=>{
@@ -136,18 +137,36 @@ export default function Main() {
       });
   };
 
+
+  const [open, setOpen] = useState(true);
+  const toggleDrawer = () => {
+    // console.log('open ori: ', open);
+    // console.log('open new: ', !open);
+    setOpen(!open);
+  }
+  const lgUp = true;
+
+  useEffect(()=>{
+    console.log("open change to : ", open);
+  },[open])
   return (
-    <div className="main">
-      <div className="">
-        <h1 className="h1"> 收貨記錄 </h1>
-        <button className="subscribe" onClick={register}>接收通知</button>
+    <> 
+      <Button onClick={toggleDrawer} sx={{position:'absolute', right:'0', top:'0'}}>switch</Button>
+      <div className="main">
+        <div className="">
+          <h1 className="h1"> 收貨記錄 </h1>
+          <button className="subscribe" onClick={register}>接收通知</button>
+          
+        </div>
+        <div className="wrapper">
+          <div className="serialId">流水號</div>
+          <div className="time">收貨時間</div>
+          <div className="deviceId">收貨裝置</div>
+          {logs}
+        </div>
       </div>
-      <div className="wrapper">
-        <div className="serialId">流水號</div>
-        <div className="time">收貨時間</div>
-        <div className="deviceId">收貨裝置</div>
-        {logs}
-      </div>
-    </div>
+
+      
+    </>
   );
 }

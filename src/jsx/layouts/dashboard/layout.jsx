@@ -18,6 +18,12 @@ const LayoutRoot = styled('div')(({ theme }) => ({
   }
 }));
 
+const LayoutRoot2 = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flex: '1 1 auto',
+  maxWidth: '100%',
+}));
+
 const LayoutContainer = styled('div')({
   display: 'flex',
   flex: '1 1 auto',
@@ -80,41 +86,34 @@ export const DashboardLayout = ({ children }) => {
     },
     [openNav]
   );
-  useEffect(() => {
-    console.log('openNav: ', openNav);
-  }, [openNav])
   
   useEffect(
     () => {
-      console.log('pathname: ' + pathname);
-      switch ('pathname') {
+      switch (pathname) {
         case '/landing':
         case '/signin':
         case '/signup':
           // if (openNav) setOpenNav(false);
-          handlePathnameChange();
+          handlePathnameChange()
           break;
-        // default:
-          // if (!openNav) setOpenNav(true);
-
+        default:
+          if (!openNav) setOpenNav(true);
+          break;
       }
-      handlePathnameChange();
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [pathname]
   );
 
   return (
     <>
       <SideNav
-        onClose={() => setOpenNav(false)}
         open={openNav}
       />
-      <LayoutRoot>
-        <LayoutContainer>
+      <LayoutRoot2 sx={{pl:openNav?SIDE_NAV_WIDTH:'0' }} className="layout-root">
+        <LayoutContainer className="layout-container">
           { children }
         </LayoutContainer>
-      </LayoutRoot>
+      </LayoutRoot2>
     </>
   );
 };

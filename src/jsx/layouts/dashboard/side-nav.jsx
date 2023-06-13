@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link, useLocation} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Archive, Input, ExpandLess, BarChart, Person} from '@mui/icons-material';
+import { Archive, Input, Button} from '@mui/icons-material';
 import {
   Box,
   Divider,
   Drawer,
   Stack,
   SvgIcon,
-  Typography,
   useMediaQuery
 } from '@mui/material';
 import { Scrollbar } from '../../components/scrollbar.jsx';
@@ -24,7 +23,7 @@ export const SideNav = (props) => {
   const items = [
     {
       title: 'Delivery Box',
-      path: '/device',
+      path: '/devices',
       icon: (
         <SvgIcon fontSize="small">
           <Archive />
@@ -32,8 +31,8 @@ export const SideNav = (props) => {
       )
     },
     {
-      title: 'Logs',
-      path: '/logs',
+      title: 'Delivery Logs',
+      path: '/delivery-logs',
       icon: (
         <SvgIcon fontSize="small">
           <Input />
@@ -51,6 +50,14 @@ export const SideNav = (props) => {
     {
       title: 'SignUp',
       path: '/signup',
+      icon: (
+        <SvgIcon fontSize="small">
+        </SvgIcon>
+      )
+    },
+    {
+      title: 'Landing',
+      path: '/landing',
       icon: (
         <SvgIcon fontSize="small">
         </SvgIcon>
@@ -125,8 +132,27 @@ export const SideNav = (props) => {
             })}
           </Stack>
         </Box>
+        <Divider />
+        <Box
+          component="nav"
+          sx={{
+            flexGrow: 1,
+            px: 2,
+            py: 3
+          }}
+        >
+        </Box>
         <Divider sx={{ borderColor: 'neutral.700' }} />
-        
+        <Stack>
+        {/* <Button variant="contained" href="/">close nav</Button> */}
+        {/* <Button variant="contained" 
+          color="primary"
+          sx={{ p: 2, border: '1px dashed grey', width: '100%', fontSize: '24px'}} 
+          href="/signup">
+          SIGN UP
+        </Button> */}
+        {/* <button >close nav</button> */}
+        </Stack>
       </Box>
     </Scrollbar>
   );

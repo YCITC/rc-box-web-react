@@ -9,11 +9,11 @@ import SignIn from './pages/SignIn.jsx';
 import SignUp from './pages/SignUp.jsx';
 import LandingPage from './pages/landing.jsx';
 import Devices from './pages/devices.jsx';
-import Logs from './pages/log.jsx';
+import DeliveryLogs from './pages/logs.jsx';
 
 // components
 // import Layout from './components/layout.jsx'
-import SidebarLayout from './layouts/sidebar.jsx';
+// import SidebarLayout from './layouts/sidebar.jsx';
 // import { Layout as DashboardLayout } from './layouts/dashboard/layout.jsx';
 import { DashboardLayout } from './layouts/dashboard/layout.jsx';
 
@@ -24,14 +24,13 @@ function LayoutWrapper() {
     <>
     {/* <SidebarLayout> */}
     <DashboardLayout>
-      {/* <h1>hello</h1> */}
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/signin" element={<SignIn />} showLayout={false} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/devices" element={<Devices />} />
-        <Route path="/logs" element={<Logs />} />
+        <Route path="/delivery-logs" element={<DeliveryLogs />} />
       </Routes>
     </DashboardLayout>
     {/* </SidebarLayout> */}
@@ -40,7 +39,7 @@ function LayoutWrapper() {
 }
 
 const App = (props) => {
-  console.clear();
+  // console.clear();
   return (
     <ThemeProvider theme={defaultTheme}>
       <BrowserRouter>

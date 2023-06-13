@@ -52,10 +52,10 @@ module.exports = {
     // open: true,
     port: 8080,
     proxy: {
-      '/auth/createUser': 'http://34.80.129.4',
-      '/auth/login': 'http://localhost:3000',
-      '/push': 'http://localhost:3000',
-      '/log': 'http://localhost:3000'
+      '/api/auth/createUser': 'http://34.80.129.4',
+      '/api/auth/login': 'http://localhost:3000',
+      '/api/push': 'http://localhost:3000',
+      '/api/log': 'http://localhost:3000'
     }
   },
   plugins: [ 

@@ -87,7 +87,7 @@ export const DashboardLayout = ({ children }) => {
   useEffect(
     () => {
       console.log('pathname: ' + pathname);
-      switch (pathname) {
+      switch ('pathname') {
         case '/landing':
         case '/signin':
         case '/signup':
@@ -98,7 +98,7 @@ export const DashboardLayout = ({ children }) => {
           // if (!openNav) setOpenNav(true);
 
       }
-      // handlePathnameChange();
+      handlePathnameChange();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [pathname]
@@ -108,7 +108,7 @@ export const DashboardLayout = ({ children }) => {
     <>
       <SideNav
         onClose={() => setOpenNav(false)}
-        open={false}
+        open={openNav}
       />
       <LayoutRoot>
         <LayoutContainer>

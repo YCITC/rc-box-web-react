@@ -5,7 +5,7 @@ import { Container, Typography, Box, Grid, Link, Checkbox, Avatar, Button} from 
 
 
 
-export default function Devices() {
+export default function DeliveryLogs() {
   const navigate = useNavigate();
   const [emailState, setEmailState] = useState('');
   const [rememberState, setRememberState] = useState(false);
@@ -29,7 +29,7 @@ export default function Devices() {
   
   return (
     <Container  component="div"  maxWidth="sm" sx={containerStyle}>
-      <h1 style={{padding: '0 16px'}}>devices</h1>
+      <h1 style={{padding: '0 16px'}}>DeliveryLogs</h1>
     </Container>
   );
 }

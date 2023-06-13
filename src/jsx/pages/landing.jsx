@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import Box from '@mui/material/Box';
 import { Button, Typography, Container } from '@mui/material';
-import Copyright from '../components/Copyright.jsx';
+import Copyright from '../components/copyright.jsx';
 
 
 
@@ -36,16 +36,15 @@ export default function LandingPage() {
   }
   return (
     <Container  component="div"  maxWidth="sm" sx={containerStyle}>
+      <h1 style={{padding: '0 16px'}}>TOKEEP YOUR PACKAGE SAVED</h1>
       <Typography className='typography' sx={typographyStyle}>
-        <h1>TO KEEP YOUR PACKAGE SAVED</h1>
         <Button variant="contained" 
           color="primary"
-          sx={{ p: 2, border: '1px dashed grey', width: '100%' }} 
+          sx={{ p: 2, border: '1px dashed grey', width: '100%', fontSize: '24px'}} 
           href="/signup">
           SIGN UP
         </Button>
       </Typography>
-      <Copyright sx={{ mt: 1 }} />
     </Container>
   );
 }

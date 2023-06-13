@@ -6,7 +6,7 @@ import { Container, Typography, Box, Grid, Link, Checkbox, Avatar, Button} from 
 import { Snackbar, Alert } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Copyright from '../components/Copyright.jsx';
+import Copyright from '../components/copyright.jsx';
 import axios from 'axios';
 
 

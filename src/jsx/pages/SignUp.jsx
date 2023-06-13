@@ -10,7 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
-import Copyright from '../components/Copyright.jsx';
+import Copyright from '../components/copyright.jsx';
 
 
 // TODO remove, this demo shouldn't need to reset the theme.

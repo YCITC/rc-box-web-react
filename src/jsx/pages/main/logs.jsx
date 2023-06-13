@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import {LogComponent} from '../../components/log/log.jsx';
-// import SidebarLayout from '../../layouts/sidebar.jsx';
-import './main.scss'
+import { LogComponent } from '../../components/log/log.jsx';
 
-export default function Main() {
+import './logs.scss'
+
+
+export default function Logs() {
   const [logs, setLogs] = useState([]);
 
   useEffect(()=>{
@@ -142,7 +143,7 @@ export default function Main() {
         <h1 className="h1"> 收貨記錄 </h1>
         <button className="subscribe" onClick={register}>接收通知</button>
       </div>
-      <div className="wrapper">
+      <div className="wrapper" hidden>
         <div className="serialId">流水號</div>
         <div className="time">收貨時間</div>
         <div className="deviceId">收貨裝置</div>

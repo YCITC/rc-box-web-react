@@ -11,10 +11,6 @@ export default function LandingPage() {
     phone: '0912123123'
   });
 
-  const [paramA, setParamA] = useState(1);
-  const [paramB, setParamB] = useState(1);
-  
-
   useEffect(()=> {
     console.log('Initial;')
     document.title = 'RC Box - Landing';
@@ -36,7 +32,7 @@ export default function LandingPage() {
   }
   return (
     <Container  component="div"  maxWidth="sm" sx={containerStyle}>
-      <h1 style={{padding: '0 16px'}}>TOKEEP YOUR PACKAGE SAVED</h1>
+      <h1 style={{padding: '0 16px'}}>TO KEEP YOUR PACKAGE SAVED</h1>
       <Typography className='typography' sx={typographyStyle}>
         <Button variant="contained" 
           color="primary"

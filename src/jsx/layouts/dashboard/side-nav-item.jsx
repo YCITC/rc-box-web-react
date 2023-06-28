@@ -1,23 +1,12 @@
-// import NextLink from 'next/link';
 import React from 'react';
+import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { Box, ButtonBase } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
-import { Link } from 'react-router-dom';
-
 export const SideNavItem = (props) => {
   const theme = useTheme();
-
   const { active = false, disabled, external, icon, path, title } = props;
-  // console.group(title)
-  // console.log('path: ', path)
-  // console.log('external: ', external)
-
-  // // const a1 = path ? external  ? "a" :"b":"C";
-  // // console.log( 'path ? external  ? "a" :"b": "c" --->', a1)
-  // // console.groupEnd(title)
-
   const linkProps = path ? { href: path}: {}
 
   return (
@@ -41,6 +30,8 @@ export const SideNavItem = (props) => {
           }
         }}
         {...linkProps}
+        LinkComponent={Link}
+        to={path}
       >
         {icon && (
           <Box

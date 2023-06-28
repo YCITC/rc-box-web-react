@@ -1,21 +1,18 @@
+import React from 'react';
 import PropTypes from 'prop-types';
-import BellIcon from '@heroicons/react/24/solid/BellIcon';
-import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
-import Bars3Icon from '@heroicons/react/24/solid/Bars3Icon';
-import MagnifyingGlassIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon';
-import {
-  Avatar,
-  Badge,
-  Box,
-  IconButton,
-  Stack,
-  SvgIcon,
-  Tooltip,
-  useMediaQuery
-} from '@mui/material';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import GroupIcon from '@mui/icons-material/Group';
+import DehazeIcon from '@mui/icons-material/Dehaze';
+import SearchIcon from '@mui/icons-material/Search';
+import MenuIcon from '@mui/icons-material/Menu';
+import { Avatar, Badge, IconButton, Link, Stack, SvgIcon, Tooltip, useMediaQuery } from '@mui/material';
+import { Box, AppBar, Toolbar, Typography } from '@mui/material';
 import { alpha } from '@mui/material/styles';
-import { usePopover } from 'src/hooks/use-popover';
-import { AccountPopover } from './account-popover';
+// import { usePopover } from 'src/hooks/use-popover';
+// import { AccountPopover } from './account-popover';
+// import Mainlogo from '../../components/logos.jsx'
+import { LogoBanner, LogoMain } from '../../components/logos.jsx'
+
 
 const SIDE_NAV_WIDTH = 280;
 const TOP_NAV_HEIGHT = 64;
@@ -23,7 +20,7 @@ const TOP_NAV_HEIGHT = 64;
 export const TopNav = (props) => {
   const { onNavOpen } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
-  const accountPopover = usePopover();
+  // const accountPopover = usePopover();
 
   return (
     <>
@@ -61,14 +58,14 @@ export const TopNav = (props) => {
             {!lgUp && (
               <IconButton onClick={onNavOpen}>
                 <SvgIcon fontSize="small">
-                  <Bars3Icon />
+                  <DehazeIcon />
                 </SvgIcon>
               </IconButton>
             )}
             <Tooltip title="Search">
               <IconButton>
                 <SvgIcon fontSize="small">
-                  <MagnifyingGlassIcon />
+                  <SearchIcon />
                 </SvgIcon>
               </IconButton>
             </Tooltip>
@@ -81,7 +78,7 @@ export const TopNav = (props) => {
             <Tooltip title="Contacts">
               <IconButton>
                 <SvgIcon fontSize="small">
-                  <UsersIcon />
+                  <GroupIcon />
                 </SvgIcon>
               </IconButton>
             </Tooltip>
@@ -93,12 +90,12 @@ export const TopNav = (props) => {
                   variant="dot"
                 >
                   <SvgIcon fontSize="small">
-                    <BellIcon />
+                    <NotificationsIcon />
                   </SvgIcon>
                 </Badge>
               </IconButton>
             </Tooltip>
-            <Avatar
+            {/* <Avatar
               onClick={accountPopover.handleOpen}
               ref={accountPopover.anchorRef}
               sx={{
@@ -107,19 +104,37 @@ export const TopNav = (props) => {
                 width: 40
               }}
               src="/assets/avatars/avatar-anika-visser.png"
-            />
+            /> */}
           </Stack>
         </Stack>
       </Box>
-      <AccountPopover
+      {/* <AccountPopover
         anchorEl={accountPopover.anchorRef.current}
         open={accountPopover.open}
         onClose={accountPopover.handleClose}
-      />
+      /> */}
     </>
   );
 };
 
 TopNav.propTypes = {
   onNavOpen: PropTypes.func
+};
+
+
+export const TopBar = (props) => {
+  const { onNavOpen } = props;
+
+  return (
+    <AppBar position="fixed" sx={{mt: 0}} color="secondary">
+      <Toolbar variant="regular">
+      <Link href="#">
+        <LogoBanner />
+      </Link>
+      </Toolbar>
+    </AppBar>
+  )
+};
+TopBar.propTypes = {
+  open: PropTypes.bool
 };

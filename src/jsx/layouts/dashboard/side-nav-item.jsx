@@ -2,9 +2,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, ButtonBase } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+
 import { Link } from 'react-router-dom';
 
 export const SideNavItem = (props) => {
+  const theme = useTheme();
+
   const { active = false, disabled, external, icon, path, title } = props;
   // console.group(title)
   // console.log('path: ', path)
@@ -30,10 +34,10 @@ export const SideNavItem = (props) => {
           textAlign: 'left',
           width: '100%',
           ...(active && {
-            backgroundColor: 'rgba(255, 255, 255, 0.04)'
+            backgroundColor: 'rgba(255, 255, 255, 0.08)'
           }),
           '&:hover': {
-            backgroundColor: 'rgba(255, 255, 255, 0.04)'
+            backgroundColor: 'rgba(255, 255, 255, 0.25)'
           }
         }}
         {...linkProps}
@@ -43,12 +47,12 @@ export const SideNavItem = (props) => {
             component="span"
             sx={{
               alignItems: 'center',
-              color: 'neutral.400',
+              color: 'primary.dark',
               display: 'inline-flex',
               justifyContent: 'center',
               mr: 2,
               ...(active && {
-                color: 'primary.main'
+                color: 'secondary.contrastText',
               })
             }}
           >
@@ -58,7 +62,7 @@ export const SideNavItem = (props) => {
         <Box
           component="span"
           sx={{
-            color: 'neutral.400',
+            color: 'primary.dark',
             flexGrow: 1,
             fontFamily: (theme) => theme.typography.fontFamily,
             fontSize: 14,
@@ -66,7 +70,7 @@ export const SideNavItem = (props) => {
             lineHeight: '24px',
             whiteSpace: 'nowrap',
             ...(active && {
-              color: 'common.white'
+              color: 'secondary.contrastText'
             }),
             ...(disabled && {
               color: 'neutral.500'

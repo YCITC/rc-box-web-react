@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { Link as RLink, useNavigate } from "react-router-dom";
 import CssBaseline from '@mui/material/CssBaseline';
 import { TextField, FormControlLabel} from '@mui/material';
 import { Container, Typography, Box, Grid, Link, Checkbox, Avatar, Button} from '@mui/material';
 import { Snackbar, Alert } from '@mui/material';
+import { Backdrop, CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Copyright from '../components/copyright.jsx';
 import axios from 'axios';
 
@@ -13,10 +13,12 @@ import axios from 'axios';
 export default function SignIn() {
   const navigate = useNavigate();
   const [emailState, setEmailState] = useState('');
+  const [openBackdrop, setOpenBackdrop] = useState(false);
   const [openSnackbarState, setOpenSnackbarState] = useState({open: false, message: ''});
   const [rememberState, setRememberState] = useState(false);
 
   useEffect(()=>{
+    document.title = 'RC Box - Sign In';
     if (localStorage.getItem('userEmail') !== null) {
       email = localStorage.getItem('userEmail');
       setEmailState(localStorage.getItem('userEmail'))
@@ -26,6 +28,7 @@ export default function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setOpenBackdrop(true);
     const data = new FormData(event.currentTarget);
 
     // Storage user email to local storage
@@ -39,8 +42,15 @@ export default function SignIn() {
 
     // Call login API
     const dataObj = Object.fromEntries(data.entries());
-    const json = JSON.stringify(dataObj)
-    axios.post('/auth/login', json, {
+    let json = {};
+    try {
+      json = JSON.stringify(dataObj)
+    }
+    catch (error) {
+      console.error(error)
+      setOpenBackdrop(false);
+    }
+    axios.post('/api/auth/login', json, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -49,6 +59,7 @@ export default function SignIn() {
       const now = new Date();
       localStorage.setItem('token', response.data.access_token);
       localStorage.setItem('tokenCreateTime', now.toISOString());
+      setOpenBackdrop(false);
       navigate('/')
     })
     .catch((error)=>{
@@ -127,7 +138,7 @@ export default function SignIn() {
               </Link>
             </Grid>
             <Grid item xs sx={{textAlign: "right"}}>
-              <Link href="\signup" variant="body2">
+              <Link to="/signup" variant="body2" component={RLink}>
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
@@ -140,6 +151,12 @@ export default function SignIn() {
           {openSnackbarState.message}
         </Alert>
       </Snackbar>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openBackdrop}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Container>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState} from 'react';
+import { Link as RLink }  from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Typography, Container, Box, Grid, Link } from '@mui/material';
@@ -44,7 +45,7 @@ export default function SignUp() {
     const json = JSON.stringify(dataObj)
 
     setPasswordCheckError({state: false, message: ''});
-    axios.put('/auth/createUser', json, {
+    axios.put('/api/auth/createUser', json, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -249,7 +250,7 @@ export default function SignUp() {
           </Button> 
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="\signin" variant="body2">
+              <Link to="/signin" variant="body2" component={RLink}>
                 Already have an account? Sign in
               </Link>
             </Grid>

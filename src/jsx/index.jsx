@@ -81,11 +81,11 @@ const App = (props) => {
   // console.clear();
   return (
     <ThemeProvider theme={defaultTheme}>
-      <AuthProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <AuthProvider>
           <LayoutWrapper />
-        </BrowserRouter>
-      </AuthProvider>
+        </AuthProvider>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useAuthContext } from '../contexts/auth-context.jsx';
 import { useAuth } from '../hooks/use-auth.jsx';
 
 

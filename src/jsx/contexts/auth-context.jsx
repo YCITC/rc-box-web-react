@@ -1,5 +1,8 @@
 import React, { createContext, useContext, useEffect, useReducer, useRef } from "react";
+import { useNavigate, redirect } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
+import axios from "axios";
 
 const initialState = {
   isSignIn: false,
@@ -59,10 +62,10 @@ export const AuthProvider = (props) => {
   const { children } = props;
   const [state, dispatch] = useReducer(reducer, initialState);
   const initialized = useRef(false);
+  const navigate = useNavigate();
 
   const signIn = async (user, token) => {
     let now = new Date();
-
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('token', token);
     localStorage.setItem('tokenCreateTime', now.toISOString());
@@ -80,6 +83,8 @@ export const AuthProvider = (props) => {
     dispatch({
       type: 'SIGN_OUT',
     });
+
+    navigate('/landing');
   };
 
   const initialize = async () => {
@@ -98,22 +103,37 @@ export const AuthProvider = (props) => {
     if(timeString) {
       const tokenCreateTime = new Date(timeString);
       const now = new Date();
-      const diffDate = new Date(tokenCreateTime - now)
-      switch (diffDate.getDay()) {
-        case (diffDate.getDay() >=30):
-          // TODO: Need login
-          localStorage.clear();
-          break;
-        case (diffDate.getDay() >= 15):
-          // TODO: update token;
-          localStorage.setItem('token', token);
-          localStorage.setItem('tokenCreateTime', now.toISOString());
-        default:
-          isAuthenticated = true;
-          user = JSON.parse(localStorage.getItem('user'));
-          token = localStorage.getItem('token');
-          break;
+      const diffDate = Math.floor((now - tokenCreateTime)/(1000 * 60 * 60 * 24));
+
+      // console.log('[auth-context] diffDate:', diffDate )
+      // console.log('[auth-context] tokenCreateTime: \t', tokenCreateTime.toISOString())
+      // console.log('[auth-context] now: \t\t\t', now.toISOString())
+
+      if (diffDate >= 30) {
+        localStorage.removeItem('user')
+        localStorage.removeItem('token')
+        localStorage.removeItem('tokenCreateTime')
+        navigate('/signin');
+        return;
       }
+      if (diffDate >= 15) {
+        // console.log('[auth-context]: need update token');
+        const response = await axios.get('/api/auth/updateToken', {
+          headers: {
+            'accept': '*/*',
+            'Authorization': 'Bearer '+localStorage.getItem('token')
+          }
+        })
+        // console.log('[auth-context]: response.data.access_token: ', response.data.access_token)
+        token = response.data.access_token;
+        localStorage.setItem('token', token);
+        localStorage.setItem('tokenCreateTime', now.toISOString());
+      }
+
+      // console.log('[auth-context]: default');
+      isAuthenticated = true;
+      user = JSON.parse(localStorage.getItem('user'));
+      token = localStorage.getItem('token');
     }
     // console.log('[auth-context] isAuthenticated:', isAuthenticated)
 

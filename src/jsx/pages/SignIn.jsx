@@ -6,9 +6,9 @@ import { Container, Typography, Box, Grid, Link, Checkbox, Avatar, Button} from 
 import { Snackbar, Alert } from '@mui/material';
 import { Backdrop, CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Copyright from '../components/copyright.jsx';
 import axios from 'axios';
-
+import Copyright from '../components/copyright.jsx';
+import { useAuth } from '../hooks/use-auth.jsx';
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -16,6 +16,7 @@ export default function SignIn() {
   const [openBackdrop, setOpenBackdrop] = useState(false);
   const [openSnackbarState, setOpenSnackbarState] = useState({open: false, message: ''});
   const [rememberState, setRememberState] = useState(false);
+  const auth = useAuth();
 
   useEffect(()=>{
     document.title = 'RC Box - Sign In';
@@ -26,7 +27,7 @@ export default function SignIn() {
     }
   },[])
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setOpenBackdrop(true);
     const data = new FormData(event.currentTarget);
@@ -50,17 +51,25 @@ export default function SignIn() {
       console.error(error)
       setOpenBackdrop(false);
     }
+
     axios.post('/api/auth/login', json, {
       headers: {
         'Content-Type': 'application/json'
       }
     })
-    .then((response)=>{
+    .then(async (response)=>{
       const now = new Date();
-      localStorage.setItem('token', response.data.access_token);
+      const user = response.data.user;
+      const token = response.data.access_token
+      console.log('[SingIn] user: ', user);
+
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', token);
       localStorage.setItem('tokenCreateTime', now.toISOString());
+
+      auth.signIn(user, token);
       setOpenBackdrop(false);
-      navigate('/')
+      navigate('/');
     })
     .catch((error)=>{
       const res = JSON.parse(error.request.response) 

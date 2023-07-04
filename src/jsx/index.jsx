@@ -1,5 +1,6 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { createContext, useContext, useState } from 'react';
+import { Routes, Route } from "react-router-dom";
+import { BrowserRouter, Link } from "react-router-dom";
 import { createRoot } from 'react-dom/client';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -12,17 +13,57 @@ import Devices from './pages/devices.jsx';
 import DeliveryLogs from './pages/logs.jsx';
 
 // components
-// import Layout from './components/layout.jsx'
-// import SidebarLayout from './layouts/sidebar.jsx';
-// import { Layout as DashboardLayout } from './layouts/dashboard/layout.jsx';
 import { DashboardLayout } from './layouts/dashboard/layout.jsx';
 
-const defaultTheme = createTheme();
+// context
+import { AuthProvider } from './contexts/auth-context.jsx';
+
+
+const defaultTheme = createTheme({
+  palette: {
+    mode: 'light',
+    primary: {
+      // light: will be calculated from palette.primary.main,
+      main: '#884A39',
+      // dark: will be calculated from palette.primary.main,
+      contrastText: '#F9E0BB'
+    },
+    secondary: {
+      light: '#0066ff',
+      main: '#C38154',
+      // dark: will be calculated from palette.secondary.main,
+      // contrastText: will be calculated to contrast with palette.primary.main
+      contrastText: '#F9E0BB'
+    },
+    info: {
+      main: '#C38154',
+    },
+    // Provide every color token (light, main, dark, and contrastText) when using
+    // custom colors for props in Material UI's components.
+    // Then you will be able to use it like this: `<Button color="custom">`
+    // (For TypeScript, you need to add module augmentation for the `custom` value)
+    custom: {
+      light: '#ffa726',
+      main: '#f57c00',
+      dark: '#ef6c00',
+      contrastText: 'rgba(0, 0, 0, 0.87)',
+    },
+    // Used by `getContrastText()` to maximize the contrast between
+    // the background and the text.
+    contrastThreshold: 3,
+    // Used by the functions below to shift a color's luminance by approximately
+    // two indexes within its tonal palette.
+    // E.g., shift from Red 500 to Red 300 or Red 700.
+    tonalOffset: 0.2,
+    
+  },
+  zIndex: {
+    dialog: 1600,
+  }
+});
 
 function LayoutWrapper() {
   return (
-    <>
-    {/* <SidebarLayout> */}
     <DashboardLayout>
       <Routes>
         <Route path="/" element={<Main />} />
@@ -33,8 +74,6 @@ function LayoutWrapper() {
         <Route path="/delivery-logs" element={<DeliveryLogs />} />
       </Routes>
     </DashboardLayout>
-    {/* </SidebarLayout> */}
-    </>
   );
 }
 
@@ -42,9 +81,11 @@ const App = (props) => {
   // console.clear();
   return (
     <ThemeProvider theme={defaultTheme}>
-      <BrowserRouter>
-        <LayoutWrapper />
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <LayoutWrapper />
+        </BrowserRouter>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link as RLink } from "react-router-dom";
 import PropTypes from 'prop-types';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import GroupIcon from '@mui/icons-material/Group';
@@ -7,7 +7,7 @@ import DehazeIcon from '@mui/icons-material/Dehaze';
 import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Avatar, Badge, IconButton, Stack, SvgIcon, Tooltip, useMediaQuery } from '@mui/material';
-import { Box, AppBar, Toolbar, Typography } from '@mui/material';
+import { Box, AppBar, Toolbar, Typography, Link} from '@mui/material';
 import { alpha } from '@mui/material/styles';
 // import { usePopover } from 'src/hooks/use-popover';
 // import { AccountPopover } from './account-popover';
@@ -129,7 +129,7 @@ export const TopBar = (props) => {
   return (
     <AppBar position="fixed" sx={{mt: 0}} color="secondary">
       <Toolbar variant="regular">
-      <Link to="/">
+      <Link to="/" component={RLink}>
         <LogoBanner />
       </Link>
       </Toolbar>

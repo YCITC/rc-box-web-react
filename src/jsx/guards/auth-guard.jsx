@@ -1,53 +1,38 @@
-import { useEffect, useRef, useState } from 'react';
-// import { useRouter } from 'next/router';
+import React, { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useAuthContext } from '../contexts/auth-context.jsx';
+import { useAuth } from '../hooks/use-auth.jsx';
+
 
 export const AuthGuard = (props) => {
   const { children } = props;
-  // const router = useRouter();
-  const { isAuthenticated } = useAuthContext();
-  const ignore = useRef(false);
-  const [checked, setChecked] = useState(false);
+  const auth = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  // Only do authentication check on component mount.
-  // This flow allows you to manually redirect the user after sign-out, otherwise this will be
-  // triggered and will automatically redirect to sign-in page.
+  let pathname = null;
+  useEffect(() => {
+    // console.log('[auth-guard] auth.isLoading changed')
+    // console.log('[auth-guard] auth.isLoading:\t', auth.isLoading);
+    // console.log('[auth-guard] auth.isSignin:\t', auth.isSignIn);
+    if (auth.isLoading) return;
+    if (auth.isSignIn) return;
 
-  // useEffect(
-  //   () => {
-  //     if (!router.isReady) {
-  //       return;
-  //     }
+    pathname = location.pathname;
 
-  //     // Prevent from calling twice in development mode with React.StrictMode enabled
-  //     if (ignore.current) {
-  //       return;
-  //     }
+    console.log('[auth-guard] path: ', pathname)
+    switch (pathname) {
+      case '/devices':
+      case '/delivery-logs':
+        // console.log('[auth-guard] redirecting to sign in page')
+        navigate('/signin');
+        break;
+      default:
+        break;
+    }
 
-  //     ignore.current = true;
-
-  //     if (!isAuthenticated) {
-  //       console.log('Not authenticated, redirecting');
-  //       router
-  //         .replace({
-  //           pathname: '/auth/login',
-  //           query: router.asPath !== '/' ? { continueUrl: router.asPath } : undefined
-  //         })
-  //         .catch(console.error);
-  //     } else {
-  //       setChecked(true);
-  //     }
-  //   },
-  //   [router.isReady]
-  // );
-
-  if (!checked) {
-    return null;
-  }
-
-  // If got here, it means that the redirect did not occur, and that tells us that the user is
-  // authenticated / authorized.
+  }, [auth.isLoading, location.pathname]);
 
   return children;
 };

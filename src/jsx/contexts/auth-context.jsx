@@ -1,68 +1,86 @@
-import { createContext, useContext, useEffect, useReducer, useRef } from 'react';
+import React, { createContext, useContext, useEffect, useReducer, useRef } from "react";
 import PropTypes from 'prop-types';
 
+const initialState = {
+  isSignIn: false,
+  user: null,
+  token: null,
+  tokenCreateTime: null,
+  isLoading: true,
+}
 const HANDLERS = {
   INITIALIZE: 'INITIALIZE',
   SIGN_IN: 'SIGN_IN',
   SIGN_OUT: 'SIGN_OUT'
 };
-
-const initialState = {
-  isAuthenticated: false,
-  isLoading: true,
-  user: null
-};
-
 const handlers = {
   [HANDLERS.INITIALIZE]: (state, action) => {
-    const user = action.payload;
-
+    const user = action.user;
     return {
       ...state,
       ...(
-        // if payload (user) is provided, then is authenticated
         user
           ? ({
-            isAuthenticated: true,
             isLoading: false,
-            user
+            isSignIn: true,
+            user,
+            token: action.token,
+            tokenCreateTime: new Date().toISOString(),
           })
           : ({
-            isLoading: false
+            isLoading: false,
           })
       )
-    };
+    }
   },
   [HANDLERS.SIGN_IN]: (state, action) => {
-    const user = action.payload;
-
     return {
-      ...state,
-      isAuthenticated: true,
-      user
-    };
+      isSignIn: true,
+      user: action.user,
+      token: action.token,
+      tokenCreateTime: new Date().toISOString(),
+      isLoading: false,
+    }
   },
-  [HANDLERS.SIGN_OUT]: (state) => {
+  [HANDLERS.SIGN_OUT]: () => {
     return {
-      ...state,
-      isAuthenticated: false,
-      user: null
+      ...initialState,
+      isLoading: false,
     };
   }
+}
+const reducer = (state, action) => {
+  // console.log('[auth-context] reducer aciton type: ', action.type);
+  return handlers[action.type] ? handlers[action.type](state, action) : state
 };
 
-const reducer = (state, action) => (
-  handlers[action.type] ? handlers[action.type](state, action) : state
-);
-
-// The role of this context is to propagate authentication state through the App tree.
-
-export const AuthContext = createContext({ undefined });
-
+export const AuthContext = createContext();
 export const AuthProvider = (props) => {
   const { children } = props;
   const [state, dispatch] = useReducer(reducer, initialState);
   const initialized = useRef(false);
+
+  const signIn = async (user, token) => {
+    let now = new Date();
+
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('token', token);
+    localStorage.setItem('tokenCreateTime', now.toISOString());
+
+    dispatch({
+      type: 'SIGN_IN',
+      isSignIn: true,
+      user: user,
+      token: token,
+    });
+
+    return Promise.resolve();
+  }
+  const signOut = () => {
+    dispatch({
+      type: 'SIGN_OUT',
+    });
+  };
 
   const initialize = async () => {
     // Prevent from calling twice in development mode with React.StrictMode enabled
@@ -73,24 +91,38 @@ export const AuthProvider = (props) => {
     initialized.current = true;
 
     let isAuthenticated = false;
+    let token = null;
+    let user = null;
+    let timeString = localStorage.getItem('tokenCreateTime');
 
-    try {
-      isAuthenticated = window.sessionStorage.getItem('authenticated') === 'true';
-    } catch (err) {
-      console.error(err);
+    if(timeString) {
+      const tokenCreateTime = new Date(timeString);
+      const now = new Date();
+      const diffDate = new Date(tokenCreateTime - now)
+      switch (diffDate.getDay()) {
+        case (diffDate.getDay() >=30):
+          // TODO: Need login
+          localStorage.clear();
+          break;
+        case (diffDate.getDay() >= 15):
+          // TODO: update token;
+          localStorage.setItem('token', token);
+          localStorage.setItem('tokenCreateTime', now.toISOString());
+        default:
+          isAuthenticated = true;
+          user = JSON.parse(localStorage.getItem('user'));
+          token = localStorage.getItem('token');
+          break;
+      }
     }
+    // console.log('[auth-context] isAuthenticated:', isAuthenticated)
 
     if (isAuthenticated) {
-      const user = {
-        id: '5e86809283e28b96d2d38537',
-        avatar: '/assets/avatars/avatar-anika-visser.png',
-        name: 'Anika Visser',
-        email: 'anika.visser@devias.io'
-      };
-
       dispatch({
-        type: HANDLERS.INITIALIZE,
-        payload: user
+        type: 'SIGN_IN',
+        signIn: true,
+        user: user,
+        token: token,
       });
     } else {
       dispatch({
@@ -99,87 +131,41 @@ export const AuthProvider = (props) => {
     }
   };
 
-  useEffect(
-    () => {
-      initialize();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
 
-  const skip = () => {
-    try {
-      window.sessionStorage.setItem('authenticated', 'true');
-    } catch (err) {
-      console.error(err);
-    }
-
-    const user = {
-      id: '5e86809283e28b96d2d38537',
-      avatar: '/assets/avatars/avatar-anika-visser.png',
-      name: 'Anika Visser',
-      email: 'anika.visser@devias.io'
-    };
-
-    dispatch({
-      type: HANDLERS.SIGN_IN,
-      payload: user
-    });
-  };
-
-  const signIn = async (email, password) => {
-    if (email !== 'demo@devias.io' || password !== 'Password123!') {
-      throw new Error('Please check your email and password');
-    }
-
-    try {
-      window.sessionStorage.setItem('authenticated', 'true');
-    } catch (err) {
-      console.error(err);
-    }
-
-    const user = {
-      id: '5e86809283e28b96d2d38537',
-      avatar: '/assets/avatars/avatar-anika-visser.png',
-      name: 'Anika Visser',
-      email: 'anika.visser@devias.io'
-    };
-
-    dispatch({
-      type: HANDLERS.SIGN_IN,
-      payload: user
-    });
-  };
-
-  const signUp = async (email, name, password) => {
-    throw new Error('Sign up is not implemented');
-  };
-
-  const signOut = () => {
-    dispatch({
-      type: HANDLERS.SIGN_OUT
-    });
-  };
+  useEffect(() => {
+    // console.log('[auth-context] initialize')
+    initialize();
+  },[]);
 
   return (
     <AuthContext.Provider
       value={{
         ...state,
-        skip,
         signIn,
-        signUp,
-        signOut
+        signOut,
       }}
     >
-      {children}
+      { children }
     </AuthContext.Provider>
   );
 };
-
 AuthProvider.propTypes = {
   children: PropTypes.node
 };
-
-export const AuthConsumer = AuthContext.Consumer;
-
+// export const AuthConsumer = AuthContext.Consumer;
 export const useAuthContext = () => useContext(AuthContext);
+
+// --------------------------------------------
+// export const MyContext = createContext(null);
+// export const useMyContext = () => useContext(MyContext);
+// export const MyProvider = (props) => {
+//   const { value, children } = props;
+//   return (
+//     <>
+//       <MyContext.Provider value={value} >
+//         { children }
+//       </MyContext.Provider>
+//     </>
+//   )
+// }
+// --------------------------------------------

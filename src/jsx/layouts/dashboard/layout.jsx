@@ -1,26 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import { withAuthGuard } from '../../hocs/with-auth-guard.jsx';
+import { AuthGuard } from '../../guards/auth-guard.jsx';
 import { SideNav } from './side-nav.jsx';
 import { TopBar } from './top-nav.jsx';
-// import { TopNav } from './top-nav.jsx';
 
 const SIDE_NAV_WIDTH = '280px';
 const TOP_BAR_HEIGHT = '64px';
-
-const LayoutRoot = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flex: '1 1 auto',
-  maxWidth: '100%',
-  [theme.breakpoints.up('lg')]: {
-    marginLeft: SIDE_NAV_WIDTH,
-    marginTop: TOP_BAR_HEIGHT,
-  }
-}));
 
 const LayoutRoot2 = styled('div')(({ theme }) => ({
   // display: 'flex',
@@ -76,66 +66,69 @@ export const Layout = withAuthGuard((props) => {
   );
 });
 
-export const DashboardLayout = ({ children }) => {
-  const location = useLocation();
-  const pathname = location.pathname;
-  const [openNav, setOpenNav] = useState(false);
-  const theme = useTheme();
-
-  const styleLayoutRoot = {
-    [theme.breakpoints.up('lg')]: {
-      marginLeft: openNav?SIDE_NAV_WIDTH:0,
-      marginTop: openNav?TOP_BAR_HEIGHT:0,
-    }
-  }
-  const styleLayoutContainer = {
-    [theme.breakpoints.up('lg')]: {
-      marginLeft: openNav?SIDE_NAV_WIDTH:0,
-      marginTop: openNav?TOP_BAR_HEIGHT:0,
-    }
-  }
-  const handlePathnameChange = useCallback(
-    () => {
-      console.log('on handlePathnameChange, openNav: ', openNav);
-      if (openNav) {
-        setOpenNav(false);
-      }
-    },
-    [openNav]
-  );
+export const DashboardLayout = withAuthGuard(
+  ({ children }) => {
+    const location = useLocation();
+    const pathname = location.pathname;
+    const [openNav, setOpenNav] = useState(false);
+    const theme = useTheme();
   
-  useEffect(() => {
-    console.log('re render, openNav: ', openNav);
-  }, [openNav])
-
-  useEffect(
-    () => {
-      console.log('pathname: ', pathname)
-      switch (pathname) {
-        case '/landing':
-        case '/signin':
-        case '/signup':
-          if (openNav) setOpenNav(false);
-          // handlePathnameChange()
-          break;
-        default:
-          if (!openNav) setOpenNav(true);
-          break;
+    const styleLayoutRoot = {
+      [theme.breakpoints.up('lg')]: {
+        marginLeft: openNav?SIDE_NAV_WIDTH:0,
+        marginTop: openNav?TOP_BAR_HEIGHT:0,
       }
-    },
-    [pathname]
-  );
-
-  return (
-    <>
-      <TopBar onNavOpen={openNav} />
-      <SideNav open={openNav} />
-      {/* sx={{pl:openNav?SIDE_NAV_WIDTH:0 }} */}
-      <LayoutRoot2 sx={styleLayoutRoot} className="layout-root">
-        <LayoutContainer className="layout-container">
-          { children }
-        </LayoutContainer>
-      </LayoutRoot2>
-    </>
-  );
-};
+    }
+    const styleLayoutContainer = {
+      [theme.breakpoints.up('lg')]: {
+        marginLeft: openNav?SIDE_NAV_WIDTH:0,
+        marginTop: openNav?TOP_BAR_HEIGHT:0,
+      }
+    }
+    const handlePathnameChange = useCallback(
+      () => {
+        console.log('on handlePathnameChange, openNav: ', openNav);
+        if (openNav) {
+          setOpenNav(false);
+        }
+      },
+      [openNav]
+    );
+    
+    // useEffect(() => {
+    //   console.log('re render, openNav: ', openNav);
+    // }, [openNav])
+  
+    useEffect(
+      () => {
+        // console.log('[layout] pathname: ', pathname)
+        switch (pathname) {
+          case '/landing':
+          case '/signin':
+          case '/signup':
+            if (openNav) setOpenNav(false);
+            // handlePathnameChange()
+            break;
+          default:
+            if (!openNav) setOpenNav(true);
+            break;
+        }
+      },
+      [pathname]
+    );
+  
+    return (
+      <>
+        {/* <AuthGuard pathname={pathname}> */}
+          <TopBar onNavOpen={openNav} />
+          <SideNav open={openNav} />
+          <LayoutRoot2 sx={styleLayoutRoot} className="layout-root">
+            <LayoutContainer className="layout-container">
+              { children }
+            </LayoutContainer>
+          </LayoutRoot2>
+        {/* </AuthGuard> */}
+      </>
+    );
+  }
+);

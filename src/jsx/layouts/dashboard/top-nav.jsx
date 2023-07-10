@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as RLink } from "react-router-dom";
 import PropTypes from 'prop-types';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -6,6 +6,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useEffect } from 'react';
 import { Avatar, Badge, IconButton, Stack, SvgIcon, Tooltip, useMediaQuery } from '@mui/material';
 import { Box, AppBar, Toolbar, Typography, Link} from '@mui/material';
 import { alpha } from '@mui/material/styles';
@@ -124,8 +125,12 @@ TopNav.propTypes = {
 
 
 export const TopBar = (props) => {
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const { onNavOpen } = props;
+
   if (!onNavOpen) return <></>;
+  // if (!lgUp) return <></>;
+
   return (
     <AppBar position="fixed" sx={{mt: 0}} color="secondary">
       <Toolbar variant="regular">

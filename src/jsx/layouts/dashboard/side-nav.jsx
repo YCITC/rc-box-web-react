@@ -133,11 +133,13 @@ export const SideNav = (props) => {
     </Scrollbar>
   );
 
-            
+  if (!open) return <></>;
+  if (!lgUp) return <></>;
+
   return (
     <Drawer
       anchor="left"
-      open={open}
+      // open={open}
       PaperProps={{
         color: 'secondary',
         sx: {

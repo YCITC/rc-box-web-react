@@ -51,7 +51,6 @@ export default function SignIn() {
       console.error(error)
       setOpenBackdrop(false);
     }
-
     axios.post('/api/auth/login', json, {
       headers: {
         'Content-Type': 'application/json'

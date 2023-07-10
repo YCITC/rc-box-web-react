@@ -2,15 +2,12 @@ import React, { useContext } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { useTheme } from '@mui/material/styles';
-import { styled } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
+import { useTheme, styled} from '@mui/material/styles';
 import { withAuthGuard } from '../../hocs/with-auth-guard.jsx';
 import { AuthGuard } from '../../guards/auth-guard.jsx';
 import { SideNav } from './side-nav.jsx';
 import { TopBar } from './top-nav.jsx';
-
-const SIDE_NAV_WIDTH = '280px';
-const TOP_BAR_HEIGHT = '64px';
 
 const LayoutRoot2 = styled('div')(({ theme }) => ({
   // display: 'flex',
@@ -22,7 +19,7 @@ const LayoutContainer = styled('div')({
   // display: 'flex',
   // flex: '1 1 auto',
   // flexDirection: 'column',
-  width: '100%'
+  width: '100%',
 });
 
 export const Layout = withAuthGuard((props) => {
@@ -72,18 +69,22 @@ export const DashboardLayout = withAuthGuard(
     const pathname = location.pathname;
     const [openNav, setOpenNav] = useState(false);
     const theme = useTheme();
-  
+    const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+
     const styleLayoutRoot = {
       [theme.breakpoints.up('lg')]: {
-        marginLeft: openNav?SIDE_NAV_WIDTH:0,
-        marginTop: openNav?TOP_BAR_HEIGHT:0,
-      }
+      },
+      marginLeft: openNav?(lgUp?theme.layout.SIDE_NAV_WIDTH:0):0,
+      marginTop: openNav?theme.layout.TOP_BAR_HEIGHT:0,
     }
     const styleLayoutContainer = {
       [theme.breakpoints.up('lg')]: {
-        marginLeft: openNav?SIDE_NAV_WIDTH:0,
-        marginTop: openNav?TOP_BAR_HEIGHT:0,
+        marginLeft: openNav?theme.layout.SIDE_NAV_WIDTH:0,
+        marginTop: openNav?theme.layout.TOP_BAR_HEIGHT:0,
       }
+    }
+    const styledLayoutNav = {
+      
     }
     const handlePathnameChange = useCallback(
       () => {
@@ -98,6 +99,9 @@ export const DashboardLayout = withAuthGuard(
     // useEffect(() => {
     //   console.log('re render, openNav: ', openNav);
     // }, [openNav])
+    // useEffect(() => {
+    //   console.log('lgUp: ', lgUp);
+    // }, [lgUp])
   
     useEffect(
       () => {

@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import Box from '@mui/material/Box';
 import { Button, Typography, Container } from '@mui/material';
-import Copyright from '../components/copyright.jsx';
 
 
 
@@ -23,6 +22,7 @@ export default function LandingPage() {
     left: '50%',
     top: '50%',
     translate: '-50% -50% 0',
+    textAlign: 'center',
   };
   
   const typographyStyle = {

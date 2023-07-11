@@ -1,60 +1,80 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import CssBaseline from '@mui/material/CssBaseline';
-import { Container, Tooltip, Box, Grid, Link, Button, IconButton} from '@mui/material';
-import { Stack, Card, CardHeader, CardContent, CardActions, Typography} from '@mui/material';
+
+import { Container, Tooltip, Stack, IconButton } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { NewDeviceDialog } from '../components/dialog/new-device.jsx';
-import { styled } from '@mui/material/styles';
 import axios from 'axios';
+
+import NewDeviceDialog from '../components/dialog/new-device.jsx';
+import UnbindDeviceConfirmDialog from '../components/dialog/unbind-device.jsx';
 import { useAuth } from '../hooks/use-auth.jsx';
+import DeviceCard from '../components/device-card.jsx';
+
 
 export default function Devices() {
   const navigate = useNavigate();
   const [devices, setDevices] = useState([]);
-  const [emailState, setEmailState] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
-  const [rememberState, setRememberState] = useState(false);
+  const [openUnbindDialog, setOpenUnbindDialog] = useState(false);
+  const [allowNotify, setAllowNotify] = useState(false);
+  const [theUnbindDevice, setTheUnbindDevice ] = useState(null);
   const auth = useAuth();
+  const theme = useTheme();
 
-  let email = null;
-
-  useEffect(()=>{
-    if (localStorage.getItem('userEmail') !== null) {
-      email = localStorage.getItem('userEmail');
-      setEmailState(localStorage.getItem('userEmail'));
-      setRememberState(true);
+  const getBrowserInfo = ()=>{
+    let bowserInfo = {
+      'name': '',
+      'version': '',
     }
-  },[]);
+    if (navigator.userAgentData !== undefined) {
+      bowserInfo.name = 'Chrome';
+      navigator.userAgentData.brands.every((info) => {
+        if (info.brand == 'Google Chrome') {
+          bowserInfo.version = info.version;
+          return;
+        }
+        return true;
+      });
+      return bowserInfo;
+    }
+
+    const infoList = navigator.userAgent.split(' ');
+    infoList.every((info)=>{
+      if (info.indexOf('Safari') > -1) {
+        bowserInfo.name = 'Safari';
+        bowserInfo.version = info.split('/')[1];
+      }
+      if (info.indexOf('Firefox') > -1) {
+        bowserInfo.name = 'Firefox'
+        bowserInfo.version = info.split('/')[1]
+        return;
+      }
+      return true;
+    })
+    return bowserInfo;
+  };
+
+  useEffect(() => {
+    let browserInfo = getBrowserInfo();
+    if (browserInfo.name === 'Chrome') setAllowNotify(true);
+  }, []);
 
   useEffect(() => {
     if (!auth.isSignIn) return;
     findAllByUser();
   },[auth.isSignIn]);
 
-  useEffect(() => {
-    console.log('[device] be updated', devices);
-  },[devices]);
+  // useEffect(() => {
+  //   console.log('[device] be updated', devices);
+  // },[devices]);
 
-  const DeviceCard = styled(Card)(({ theme }) => ({
-    backgroundColor: '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    width: 268,
-  }));
 
-  const onCloseHandler = () => {
-    console.log('onCloseHandler');
-    setOpenDialog(false);
-  };
   const dialogOpenHandler = () => {
     setOpenDialog(true);
   };
 
-  const findAllByUser = async (user) => {
+  const findAllByUser = (user) => {
     axios.get('/api/devices/findAllByUser', {
       headers: {
         'accept': 'application/json',
@@ -67,58 +87,67 @@ export default function Devices() {
       const res = JSON.parse(error.request.response) 
       console.error('[device]', res.message)
     });
+  };
+
+  const unBindConfirm = (device) => {
+    
+    setTheUnbindDevice(device);
+    setOpenUnbindDialog(true);
 
   }
-  const deviceList = () => {
-    return devices.map(device => (
-      <DeviceCard key={"device-"+device.deviceId} variant="outlined">
-        <CardHeader title={device.alias.length>0 ? device.alias : device.deviceId} />
-        <CardContent>
-          <Typography>
-            <span>{device.createdTime}</span>
-          </Typography>
-        </CardContent>
-        <CardActions >
-          <Button sx={{marginRight: '90px'}} >subscribe</Button>
-          <IconButton>
-            <DeleteForeverIcon  />
-          </IconButton>
-        </CardActions>
-      </DeviceCard>)
-    );
+  const unBindTheDevice = (device) => {
+    return axios.delete('/api/devices/unbind/'+device.deviceId, {
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + auth.token
+      }
+    });
+  }
+
+  const renderDeviceList = () => {
+    return devices.map(device => {
+      return <DeviceCard key={"device-"+device.deviceId} device={device} allowNotify={allowNotify} unBindConfirm={(device)=>unBindConfirm(device)} reflashDevices={findAllByUser}/>;
+    });
   };
 
   const containerStyle =  {
+    position: 'static',
+    // border: '2px dashed grey',
+    [theme.breakpoints.up('lg')]: {
+      maxWidth: '1190px',
+    },
+    [theme.breakpoints.up('sm')]: {
+      paddingRight: '5px',
+    }
+  };
+  const stackStyle = {
     width: '100%',
-    // minWidth: '100%',
-    position: 'absolute',
-    // left: '20%',
-    // top: '20%',
-    // translate: '-50% -50% 0',
-    
-    // overflow: 'scroll',
-    border: '2px dashed grey',
+    // [theme.breakpoints.up('lg')]: {
+    //   maxWidth: '1000px',
+    // }
   };
   
   return (
-    <Container component="div"  maxWidth="md" sx={containerStyle}>
+    <Container component="div"  maxWidth="lg" sx={containerStyle}>
     {/* <div style={containerStyle} > */}
       <h1 style={{padding: '0 16px'}}>
         Delivery Box
         <Tooltip title="Register A New One">
-
-          <IconButton color="secondary" onClick={dialogOpenHandler}  onClose={onCloseHandler}>
+          <IconButton color="secondary" onClick={dialogOpenHandler}>
             <LibraryAddIcon fontSize="large"/>
           </IconButton>
         </Tooltip>
       </h1>
-      <Stack 
-        direction='row'
-        spacing={{ xs: 1, sm: 2, md: 2 }}>
-        {deviceList()}
+      <Stack sx={stackStyle} direction='row' useFlexGap flexWrap="wrap" spacing={0}
+        alignItems="flex-start" justifyContent="flex-start"
+        className="devices-stack" 
+        >
+        {renderDeviceList()}
       </Stack>
-      <NewDeviceDialog open={openDialog} onClose={onCloseHandler} callback={findAllByUser}/>
+      <NewDeviceDialog open={openDialog} onClose={()=>{setOpenDialog(false)}} callback={findAllByUser}/>
+      <UnbindDeviceConfirmDialog open={openUnbindDialog}  device={theUnbindDevice} onClose={()=>{setOpenUnbindDialog(false)}} onConfirm={async ()=>unBindTheDevice(theUnbindDevice)} reflashDevices={findAllByUser} />
     {/* </div> */}
     </Container>
   );
-}
+};

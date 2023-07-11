@@ -2,24 +2,58 @@ import React, { useState } from "react";
 import { Box, Divider, Drawer, Stack, SvgIcon, useMediaQuery } from '@mui/material';
 import PropTypes from 'prop-types';
 import { Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText } from '@mui/material';
-import { Button, TextField, Backdrop, CircularProgress } from '@mui/material';
+import { Button, TextField, Backdrop, CircularProgress, Snackbar, Alert } from '@mui/material';
 import { FormControl, InputLabel, Input, FormHelperText } from '@mui/material';
+import axios from "axios";
+import { useAuth } from "../../hooks/use-auth.jsx";
 
 
-export const NewDeviceDialog = (props) => {
-  const { open, onClose } = props;
+const NewDeviceDialog = (props) => {
+  const { open, onClose, callback } = props;
   const [ backdropOpen, setBackdropOpen ] = useState(false);
+  const [ errorAlertOpen, setErrorAlertOpen ] = useState(false);
+  const [ errorAlertMessage, setErrorAlertMessage ] = useState('');
+  const auth = useAuth();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Submit')
     setBackdropOpen(true);
+    const data = new FormData(event.currentTarget);
+    const dataObj = Object.fromEntries(data.entries());
+    let json = {};
+    dataObj.ownerUserId = auth.user.id;
+    try {
+      json = JSON.stringify(dataObj)
+    }
+    catch (error) {
+      console.error(error)
+      setOpenBackdrop(false);
+      return;
+    }
 
-    // call API to create a new device;
-    setTimeout(() => {
+    axios.put('/api/devices/bind', json, {
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + auth.token
+      }
+    }).then((response) => {
+      console.log('[new-device]', response);
+      if (response.status == 200) {
+        setBackdropOpen(false);
+        onClose();
+        callback();
+      }
+
+    }).catch(error => {
+      const res = JSON.parse(error.request.response) 
+      // console.error('[new-device]', res.message)
+      setErrorAlertMessage(res.message);
+      setErrorAlertOpen(true);
       setBackdropOpen(false);
-      onClose();
-    }, 2000);
+      
+    });
+
   }
   return (
     <Dialog open={open} onClose={onClose} sx={{zIndex: (theme) => theme.zIndex.dialog}}>
@@ -62,6 +96,11 @@ export const NewDeviceDialog = (props) => {
         >
           <CircularProgress color="inherit" />
         </Backdrop>
+        <Snackbar open={errorAlertOpen}  autoHideDuration={1000}>
+          <Alert severity="error" onClose={() => {setErrorAlertOpen(false)}}>
+            {errorAlertMessage}
+          </Alert>
+        </Snackbar>
       </Box>
     </Dialog>
   );
@@ -71,3 +110,5 @@ NewDeviceDialog.propTypes = {
   onClose: PropTypes.func,
   open: PropTypes.bool
 }
+
+export default NewDeviceDialog;

@@ -18,7 +18,7 @@ export const SideNav = (props) => {
   const { open } = props;
   const location = useLocation();
   const pathname = location.pathname;
-  const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
   const theme = useTheme();
   const items = [
     {

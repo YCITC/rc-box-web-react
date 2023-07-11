@@ -9,7 +9,7 @@ import { AuthGuard } from '../../guards/auth-guard.jsx';
 import { SideNav } from './side-nav.jsx';
 import { TopBar } from './top-nav.jsx';
 
-const LayoutRoot2 = styled('div')(({ theme }) => ({
+const LayoutRoot = styled('div')(({ theme }) => ({
   // display: 'flex',
   // flex: '1 1 auto',
   maxWidth: '100%',
@@ -69,18 +69,21 @@ export const DashboardLayout = withAuthGuard(
     const pathname = location.pathname;
     const [openNav, setOpenNav] = useState(false);
     const theme = useTheme();
-    const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+    const mdUP = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
     const styleLayoutRoot = {
-      [theme.breakpoints.up('lg')]: {
+      [theme.breakpoints.up('md')]: {
       },
-      marginLeft: openNav?(lgUp?theme.layout.SIDE_NAV_WIDTH:0):0,
+      marginLeft: openNav?(mdUP?theme.layout.SIDE_NAV_WIDTH:0):0,
       marginTop: openNav?theme.layout.TOP_BAR_HEIGHT:0,
     }
     const styleLayoutContainer = {
-      [theme.breakpoints.up('lg')]: {
-        marginLeft: openNav?theme.layout.SIDE_NAV_WIDTH:0,
-        marginTop: openNav?theme.layout.TOP_BAR_HEIGHT:0,
+      position: 'fixed',
+      right: 0,
+      bottom: 0,
+      [theme.breakpoints.up('md')]: {
+        right: openNav?theme.layout.SIDE_NAV_WIDTH:0,
+        top: openNav?theme.layout.TOP_BAR_HEIGHT:0,
       }
     }
     const styledLayoutNav = {
@@ -99,9 +102,6 @@ export const DashboardLayout = withAuthGuard(
     // useEffect(() => {
     //   console.log('re render, openNav: ', openNav);
     // }, [openNav])
-    // useEffect(() => {
-    //   console.log('lgUp: ', lgUp);
-    // }, [lgUp])
   
     useEffect(
       () => {
@@ -126,11 +126,11 @@ export const DashboardLayout = withAuthGuard(
         {/* <AuthGuard pathname={pathname}> */}
           <TopBar onNavOpen={openNav} />
           <SideNav open={openNav} />
-          <LayoutRoot2 sx={styleLayoutRoot} className="layout-root">
+          <LayoutRoot sx={styleLayoutRoot} className="layout-root">
             <LayoutContainer className="layout-container">
               { children }
             </LayoutContainer>
-          </LayoutRoot2>
+          </LayoutRoot>
         {/* </AuthGuard> */}
       </>
     );

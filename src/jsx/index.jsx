@@ -59,6 +59,10 @@ const defaultTheme = createTheme({
   },
   zIndex: {
     dialog: 1600,
+  },
+  layout: {
+    SIDE_NAV_WIDTH: '280px',
+    TOP_BAR_HEIGHT: '64px',
   }
 });
 

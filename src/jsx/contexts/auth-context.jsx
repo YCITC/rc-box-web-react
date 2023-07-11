@@ -120,7 +120,7 @@ export const AuthProvider = (props) => {
         // console.log('[auth-context]: need update token');
         const response = await axios.get('/api/auth/updateToken', {
           headers: {
-            'accept': '*/*',
+            'accept': 'application/json',
             'Authorization': 'Bearer '+localStorage.getItem('token')
           }
         })

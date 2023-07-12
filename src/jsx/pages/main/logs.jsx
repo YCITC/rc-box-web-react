@@ -3,9 +3,13 @@ import axios from 'axios';
 import { LogComponent } from '../../components/log/log.jsx';
 
 import './logs.scss'
+import { useBroserInfo } from '../../helper/browser-info.jsx';
 
 
 export default function Logs() {
+  
+  const browserInfo = useBroserInfo();
+
   const [logs, setLogs] = useState([]);
 
   useEffect(()=>{
@@ -38,8 +42,6 @@ export default function Logs() {
 
       navigator.serviceWorker.register('sw.js')
       .then(function(swReg) {
-        let browserInfo = getBrowserInfo();
-
         axios.get('/push/genVAPID/'+browserInfo.name)
         .then((response)=>{
           const vapid = response.data;

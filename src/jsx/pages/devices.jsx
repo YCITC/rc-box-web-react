@@ -10,6 +10,7 @@ import NewDeviceDialog from '../components/dialog/new-device.jsx';
 import UnbindDeviceConfirmDialog from '../components/dialog/unbind-device.jsx';
 import { useAuth } from '../hooks/use-auth.jsx';
 import DeviceCard from '../components/device-card.jsx';
+import { useBroserInfo } from '../helper/browser-info.jsx';
 
 
 export default function Devices() {
@@ -21,42 +22,10 @@ export default function Devices() {
   const [theUnbindDevice, setTheUnbindDevice ] = useState(null);
   const auth = useAuth();
   const theme = useTheme();
+  const browserInfo = useBroserInfo();
 
-  const getBrowserInfo = ()=>{
-    let bowserInfo = {
-      'name': '',
-      'version': '',
-    }
-    if (navigator.userAgentData !== undefined) {
-      bowserInfo.name = 'Chrome';
-      navigator.userAgentData.brands.every((info) => {
-        if (info.brand == 'Google Chrome') {
-          bowserInfo.version = info.version;
-          return;
-        }
-        return true;
-      });
-      return bowserInfo;
-    }
-
-    const infoList = navigator.userAgent.split(' ');
-    infoList.every((info)=>{
-      if (info.indexOf('Safari') > -1) {
-        bowserInfo.name = 'Safari';
-        bowserInfo.version = info.split('/')[1];
-      }
-      if (info.indexOf('Firefox') > -1) {
-        bowserInfo.name = 'Firefox'
-        bowserInfo.version = info.split('/')[1]
-        return;
-      }
-      return true;
-    })
-    return bowserInfo;
-  };
 
   useEffect(() => {
-    let browserInfo = getBrowserInfo();
     if (browserInfo.name === 'Chrome') setAllowNotify(true);
   }, []);
 
@@ -90,11 +59,10 @@ export default function Devices() {
   };
 
   const unBindConfirm = (device) => {
-    
     setTheUnbindDevice(device);
     setOpenUnbindDialog(true);
-
-  }
+  };
+  const subscribe = (device) => {
   const unBindTheDevice = (device) => {
     return axios.delete('/api/devices/unbind/'+device.deviceId, {
       headers: {

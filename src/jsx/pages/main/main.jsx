@@ -4,14 +4,11 @@ import {LogComponent} from '../../components/log/log.jsx';
 import { Drawer, Button, Box } from '@mui/material';
 
 import './main.scss'
+import { useBroserInfo } from '../../helper/browser-info.jsx';
 
 export default function Main() {
   const [logs, setLogs] = useState([]);
-
-  useEffect(()=>{
-    // getLogs();
-    console.log("init useEffect");
-  },[])
+  const browserInfo = useBroserInfo();
 
   // useEffect(()=>{
   //   console.log("Logs has be changed")
@@ -38,8 +35,6 @@ export default function Main() {
 
       navigator.serviceWorker.register('sw.js')
       .then(function(swReg) {
-        let browserInfo = getBrowserInfo();
-
         axios.get('/push/genVAPID/'+browserInfo.name)
         .then((response)=>{
           const vapid = response.data;
@@ -93,24 +88,6 @@ export default function Main() {
     });
   }
 
-  const getBrowserInfo = ()=>{
-    const infoList = navigator.userAgent.split(" ");
-    let bowserInfo = {
-      "name": "",
-      "version": "",
-    }
-    infoList.forEach((info)=>{
-      if (info.indexOf("Chrome") > -1) {
-        bowserInfo.name = "Chrome"
-        bowserInfo.version = info.split("/")[1]
-      } else if (info.indexOf("Firefox") > -1) {
-        bowserInfo.name = "Firefox"
-        bowserInfo.version = info.split("/")[1]
-      }
-    })
-    return bowserInfo;
-  }
-
   const compare = ( a, b )=>{
     return (b.id - a.id);
   }
@@ -146,9 +123,9 @@ export default function Main() {
   }
   const lgUp = true;
 
-  useEffect(()=>{
-    console.log("open change to : ", open);
-  },[open])
+  // useEffect(()=>{
+  //   console.log("open change to : ", open);
+  // },[open])
   return (
     <> 
       <Button onClick={toggleDrawer} sx={{position:'absolute', right:'0', top:'0'}}>switch</Button>

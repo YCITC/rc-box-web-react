@@ -12,3 +12,13 @@
 * Upgrade packages:  
   ```yarn upgrade-interactive --latest ``` 
 
+
+----
+
+### Web Push Notifications on localhost
+#### For Chrome
+* Goto ```chrome://flags/#unsafely-treat-insecure-origin-as-secure```  
+add http://localhost:8080 and Enable it.  
+
+* ```chrome://serviceworker-internals/``` can find current 
+----

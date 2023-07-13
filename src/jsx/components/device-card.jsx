@@ -7,7 +7,7 @@ import { Card, CardHeader, CardContent, CardActions, Typography} from '@mui/mate
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 
-const DeviceCard = ({device, allowNotify, unBindConfirm}) => {
+const DeviceCard = ({device, allowNotify, subscribe, unBindConfirm}) => {
   const theme = useTheme();
   device.createdDate = new Date(device.createdTime).toLocaleDateString();
 
@@ -39,7 +39,7 @@ const DeviceCard = ({device, allowNotify, unBindConfirm}) => {
     <CardActions sx={{flexDirection: allowNotify?'':'row-reverse'}}>
       {allowNotify? 
       <Tooltip title="Subscribe Notification" >
-        <Button sx={{marginRight: '101px'}}>subscribe</Button>
+        <Button onClick={()=>subscribe(device)} sx={{marginRight: '101px'}}>subscribe</Button>
       </Tooltip>: <></>}
       <Tooltip title="Remove">
         <IconButton onClick={()=>unBindConfirm(device)} >

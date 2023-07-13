@@ -1,5 +1,5 @@
 {
-  "name": "simple-react-page",
+  "name": "shuooa-react-page",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -8,13 +8,13 @@
     "build-dev": "webpack --config webpack.config.js",
     "dev": "webpack-dev-server"
   },
-  "repository": "https://github.com/yesseecity/simple-react-project.git",
+  "repository": "https://github.com/YCITC/rc-box-web-react.git",
   "author": "Tid Huange <“yesseecity@gmail.com”>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yesseecity/simple-react-project/issues"
+    "url": "https://github.com/YCITC/rc-box-web-react/issues"
   },
-  "homepage": "https://github.com/yesseecity/simple-react-project",
+  "homepage": "https://github.com/YCITC/rc-box-web-react",
   "dependencies": {
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",

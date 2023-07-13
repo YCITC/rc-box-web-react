@@ -1,4 +1,4 @@
-# simple-react-project
+# shuooa-react-project
 ### Usage
 * Clone this project
 * Into project folder, install packages  
@@ -12,4 +12,3 @@
 * Upgrade packages:  
   ```yarn upgrade-interactive --latest ``` 
 
-Now yor cant see simple page on http://localhost:8080

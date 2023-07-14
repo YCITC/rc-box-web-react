@@ -5,7 +5,7 @@ import { createRoot } from 'react-dom/client';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // pages
-import Main from './pages/main/main.jsx';
+import Main from './pages/main.jsx';
 import SignIn from './pages/SignIn.jsx';
 import SignUp from './pages/SignUp.jsx';
 import LandingPage from './pages/landing.jsx';

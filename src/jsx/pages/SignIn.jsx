@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Link as RLink, useNavigate } from "react-router-dom";
+import axios from 'axios';
+
 import CssBaseline from '@mui/material/CssBaseline';
 import { TextField, FormControlLabel} from '@mui/material';
 import { Container, Typography, Box, Grid, Link, Checkbox, Avatar, Button} from '@mui/material';
 import { Snackbar, Alert } from '@mui/material';
 import { Backdrop, CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import axios from 'axios';
+
 import Copyright from '../components/copyright.jsx';
 import { useAuth } from '../hooks/use-auth.jsx';
+import { LogoMain } from '../components/logos.jsx';
+
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -43,15 +47,16 @@ export default function SignIn() {
 
     // Call login API
     const dataObj = Object.fromEntries(data.entries());
-    let json = {};
+    let jsonObj = {};
     try {
-      json = JSON.stringify(dataObj)
+      jsonObj = JSON.stringify(dataObj)
     }
     catch (error) {
       console.error(error)
       setOpenBackdrop(false);
+      return;
     }
-    axios.post('/api/auth/login', json, {
+    axios.post('/api/auth/login', jsonObj, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -85,21 +90,15 @@ export default function SignIn() {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 4,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
+        <LogoMain />
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
             margin="normal"
@@ -123,6 +122,7 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value="1234"
           />
           <FormControlLabel
             control={<Checkbox name="remember" id="remember" value="true" color="primary" 
@@ -135,7 +135,7 @@ export default function SignIn() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2 , fontSize: '2em'}}
           >
             Sign In
           </Button>

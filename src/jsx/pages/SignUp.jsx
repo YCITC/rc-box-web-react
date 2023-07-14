@@ -1,5 +1,7 @@
 import React, { useEffect, useState} from 'react';
-import { Link as RLink }  from 'react-router-dom';
+import { Link as RLink, useNavigate }  from 'react-router-dom';
+import axios from 'axios';
+
 import CssBaseline from '@mui/material/CssBaseline';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Typography, Container, Box, Grid, Link } from '@mui/material';
@@ -7,10 +9,8 @@ import { Avatar, Button, TextField } from '@mui/material';
 import { InputAdornment } from '@mui/material';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios';
-import { useNavigate } from "react-router-dom";
 
+import { LogoMain } from '../components/logos.jsx';
 import Copyright from '../components/copyright.jsx';
 
 
@@ -132,18 +132,13 @@ export default function SignUp() {
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 4,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
+        <LogoMain />
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -244,7 +239,7 @@ export default function SignUp() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2, fontSize: '2em'}}
           >
             Sign Up
           </Button> 
@@ -260,7 +255,6 @@ export default function SignUp() {
         </FormControl> */}
       </Box>
       <Copyright sx={{ mt: 5 }} />
-
       {renderDialog()}
     </Container>
   );

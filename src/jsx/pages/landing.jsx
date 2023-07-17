@@ -1,17 +1,10 @@
 import React, {useState, useEffect, useContext} from 'react';
-import Box from '@mui/material/Box';
 import { Button, Typography, Container } from '@mui/material';
 
 
-
 export default function LandingPage() {
-  const [userInfo, setUserInfo] = useState({
-    name: 'Mark',
-    phone: '0912123123'
-  });
-
   useEffect(()=> {
-    console.log('Initial;')
+    // console.log('Initial;')
     document.title = 'RC Box - Landing';
   }, []);
 

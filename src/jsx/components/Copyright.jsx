@@ -1,23 +1,20 @@
-import * as React from 'react';
-import Typography from '@mui/material/Typography';
+import React from 'react';
+import { Box } from '@mui/material';
 import Link from '@mui/material/Link';
 
 const styles = {
-  position: 'absolute',
   bottom: 0,
-  left: '50%',
-  ml: '-94px',
-  zIndex: -1,
+  textAlign: 'center',
 }
 export default function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" sx={styles} {...props}>
+    <Box component="footer" variant="body2" color="text.secondary" style={styles} {...props}>
       {'Copyright © '}
       <Link color="inherit" href="/">
       YesseeCity
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
-    </Typography>
+    </Box>
   );
 }

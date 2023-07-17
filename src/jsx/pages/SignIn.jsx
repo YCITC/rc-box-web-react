@@ -122,7 +122,6 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
-            value="1234"
           />
           <FormControlLabel
             control={<Checkbox name="remember" id="remember" value="true" color="primary" 

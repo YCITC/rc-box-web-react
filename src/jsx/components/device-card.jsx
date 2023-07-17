@@ -4,16 +4,13 @@ import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import { Tooltip, Button, IconButton } from '@mui/material';
 import { Card, CardHeader, CardContent, CardActions, Typography} from '@mui/material';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { Edit, DeleteForever } from '@mui/icons-material';
+import EditDeviceDialog from './dialog/edit-device.jsx';
 
-
-const DeviceCard = ({device, allowNotify, subscribe, unBindConfirm}) => {
+const DeviceCard = ({device, allowNotify, subscribe, reflashDevices, unBindConfirm}) => {
   const theme = useTheme();
+  const [openEditDialog, setOpenEditDialog] = useState(false);
   device.createdDate = new Date(device.createdTime).toLocaleDateString();
-
-  const removeDevice = () => {
-    unBindDevice(device.deviceId);
-  };
 
   const cardStyle = {
     backgroundColor: '#fff',
@@ -36,17 +33,28 @@ const DeviceCard = ({device, allowNotify, subscribe, unBindConfirm}) => {
         <span>Registration date: {device.createdDate}</span>
       </Typography>
     </CardContent>
-    <CardActions sx={{flexDirection: allowNotify?'':'row-reverse'}}>
+    <CardActions sx={{float: allowNotify?'':'right'}}>
       {allowNotify? 
       <Tooltip title="Subscribe Notification" >
         <Button onClick={()=>subscribe(device)} sx={{marginRight: '101px'}}>subscribe</Button>
       </Tooltip>: <></>}
+
+      <Tooltip title="Edit">
+        <IconButton onClick={()=>setOpenEditDialog(true)} >
+          <Edit />
+        </IconButton>
+      </Tooltip>
       <Tooltip title="Remove">
         <IconButton onClick={()=>unBindConfirm(device)} >
-          <DeleteForeverIcon />
+          <DeleteForever/>
         </IconButton>
       </Tooltip>
     </CardActions>
+    <EditDeviceDialog device={device} open={openEditDialog} onClose={()=>setOpenEditDialog(false)} reflashDevices={reflashDevices}/>
+    {/* 
+    
+  const { open, onClose, device, callback} = props;
+    */}
   </Card>
 };
 

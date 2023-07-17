@@ -1,4 +1,4 @@
-# simple-react-project
+# shuooa-react-project
 ### Usage
 * Clone this project
 * Into project folder, install packages  
@@ -12,4 +12,13 @@
 * Upgrade packages:  
   ```yarn upgrade-interactive --latest ``` 
 
-Now yor cant see simple page on http://localhost:8080
+
+----
+
+### Web Push Notifications on localhost
+#### For Chrome
+* Goto ```chrome://flags/#unsafely-treat-insecure-origin-as-secure```  
+add http://localhost:8080 and Enable it.  
+
+* ```chrome://serviceworker-internals/``` can find current 
+----

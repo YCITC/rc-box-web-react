@@ -41,6 +41,10 @@ module.exports = {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
+      {
+        test: /\.svg$/,
+        type: "asset/resource",
+      },
     ]
   },
   //給devserver的設定
@@ -49,11 +53,11 @@ module.exports = {
       directory: path.join(__dirname, './dist'),
     },
     historyApiFallback: true,
-    open: true,
+    // open: true,
     port: 8080,
     proxy: {
-      '/push': 'http://localhost:3000',
-      '/log': 'http://localhost:3000'
+      // '/api/*': 'http://34.80.129.4'
+      '/api/*': 'http://localhost:3000'
     }
   },
   plugins: [ 
@@ -61,7 +65,11 @@ module.exports = {
       patterns:[
         // 這次的例子中copy to的目標path會基於output.path的路徑之下
         {from: './src/static/index.html', to: './'},
+
         {from: './src/static/sw.js', to: './'},
+        {from: './src/static/favicon.ico', to: './'},
+
+        // 認證domain name 用的
         {from: './src/static/269C527184CD60B9DED8D85751EB32D5.txt', to: './'},
       ]
     })

@@ -35,30 +35,30 @@ export const SideNav = (props) => {
         <Input fontSize="small"/>
       )
     },
-    {
-      title: 'SignIn',
-      path: '/signin',
-      icon: (
-        <SvgIcon fontSize="small">
-        </SvgIcon>
-      )
-    },
-    {
-      title: 'SignUp',
-      path: '/signup',
-      icon: (
-        <SvgIcon fontSize="small">
-        </SvgIcon>
-      )
-    },
-    {
-      title: 'Landing',
-      path: '/landing',
-      icon: (
-        <SvgIcon fontSize="small">
-        </SvgIcon>
-      )
-    },
+    // {
+    //   title: 'SignIn',
+    //   path: '/signin',
+    //   icon: (
+    //     <SvgIcon fontSize="small">
+    //     </SvgIcon>
+    //   )
+    // },
+    // {
+    //   title: 'SignUp',
+    //   path: '/signup',
+    //   icon: (
+    //     <SvgIcon fontSize="small">
+    //     </SvgIcon>
+    //   )
+    // },
+    // {
+    //   title: 'Landing',
+    //   path: '/landing',
+    //   icon: (
+    //     <SvgIcon fontSize="small">
+    //     </SvgIcon>
+    //   )
+    // },
   ];
   const content = (
     <Scrollbar
@@ -73,18 +73,14 @@ export const SideNav = (props) => {
         }
       }}
     >
-      <Box
-        sx={{
+      <Box sx={{
           display: 'flex',
           flexDirection: 'column',
           height: '100%'
         }}
       >
         <Box sx={{ p: 3 }} hidden>
-          <Box
-            component={Link}
-            href="/"
-            sx={{
+          <Box component={Link} href="/" sx={{
               display: 'inline-flex',
               height: 32,
               width: 32
@@ -94,17 +90,14 @@ export const SideNav = (props) => {
           </Box>
         </Box>
         <Divider />
-        <Box
-          component="nav"
+        <Box component="nav"
           sx={{
             flexGrow: 1,
             px: 2,
             py: 3
           }}
         >
-          <Stack
-            component="ul"
-            spacing={0.5}
+          <Stack component="ul" spacing={0.5}
             sx={{
               listStyle: 'none',
               p: 0,

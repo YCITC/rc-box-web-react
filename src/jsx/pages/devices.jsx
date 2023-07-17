@@ -35,11 +35,6 @@ export default function Devices() {
     findAllByUser();
   }, [auth.isSignIn]);
 
-  // useEffect(() => {
-  //   console.log('[device] be updated', devices);
-  // },[devices]);
-
-
   const dialogOpenHandler = () => {
     setOpenDialog(true);
   };
@@ -63,6 +58,7 @@ export default function Devices() {
     setTheUnbindDevice(device);
     setOpenUnbindDialog(true);
   };
+
   const subscribe = async (device) => {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
       try {
@@ -135,13 +131,24 @@ export default function Devices() {
 
   const containerStyle = {
     position: 'static',
+    paddingTop: '10px',
     // border: '2px dashed grey',
     [theme.breakpoints.up('lg')]: {
       maxWidth: '1190px',
     },
     [theme.breakpoints.up('sm')]: {
       paddingRight: '5px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      // paddingLeft: '50px',
+      width: '70%',
+      margin: '0 auto',
     }
+  };
+  const subtitleStyle = {
+    padding: '0px 16px',
+    height: '1.5em',
+    lineHeight: '1.5em',
   };
   const stackStyle = {
     width: '100%',
@@ -149,14 +156,12 @@ export default function Devices() {
     //   maxWidth: '1000px',
     // }
   };
-
   return (
     <Container component="div" maxWidth="lg" sx={containerStyle}>
-      {/* <div style={containerStyle} > */}
-      <h1 style={{ padding: '0 16px' }}>
+      <h1 style={subtitleStyle}>
         Delivery Box
         <Tooltip title="Register A New One">
-          <IconButton color="secondary" onClick={dialogOpenHandler}>
+          <IconButton color="secondary" onClick={dialogOpenHandler} sx={{position: 'relative',left: '20px', top: '-2px'}}>
             <LibraryAddIcon fontSize="large" />
           </IconButton>
         </Tooltip>
@@ -169,7 +174,6 @@ export default function Devices() {
       </Stack>
       <NewDeviceDialog open={openDialog} onClose={() => { setOpenDialog(false) }} callback={findAllByUser} />
       <UnbindDeviceConfirmDialog open={openUnbindDialog} device={theUnbindDevice} onClose={() => { setOpenUnbindDialog(false) }} onConfirm={async () => unBindTheDevice(theUnbindDevice)} reflashDevices={findAllByUser} />
-      {/* </div> */}
     </Container>
   );
 };

@@ -60,7 +60,7 @@ const EditDeviceDialog = (props) => {
   return (
     <Dialog open={open} onClose={onClose} sx={{zIndex: (theme) => theme.zIndex.dialog}}>
       <Box component="form" onSubmit={handleSubmit} >
-        <DialogTitle>Register New Delivery Box'</DialogTitle>
+        <DialogTitle>Edit Delivery Box</DialogTitle>
 
         <DialogContent>
           <TextField
@@ -74,7 +74,6 @@ const EditDeviceDialog = (props) => {
             disabled={true}
             value={device.deviceId.toString()}
           />
-          <FormHelperText id="deviceId">Device ID On the White Box</FormHelperText>
 
           <TextField
             autoFocus

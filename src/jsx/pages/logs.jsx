@@ -2,19 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { Container } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { DataGrid } from '@mui/x-data-grid';
 import { useAuth } from '../hooks/use-auth.jsx';
 
 export default function DeliveryLogs() {
   const auth = useAuth();
+  const theme = useTheme();
+
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
-    {
-      field: 'alias',
-      headerName: 'Alias',
-      width: 100,
-      editable: false,
-    },
     {
       field: 'deviceId',
       headerName: 'Device ID',
@@ -22,9 +19,15 @@ export default function DeliveryLogs() {
       editable: false,
     },
     {
+      field: 'alias',
+      headerName: 'Alias',
+      width: 120,
+      editable: false,
+    },
+    {
       field: 'createdTime',
       headerName: 'Time',
-      width: 400,
+      width: 300,
       editable: true,
     },
   ];
@@ -75,18 +78,37 @@ export default function DeliveryLogs() {
   }
 
   const containerStyle = {
-    // border: '1px dashed grey',
+    position: 'static',
+    paddingTop: '10px',
     width: '100%',
     position: 'absolute',
-    // left: '50%',
-    // top: '50%',
-    // translate: '-50% -50% 0',
+    [theme.breakpoints.up('lg')]: {
+      maxWidth: '800px',
+    },
+    [theme.breakpoints.up('sm')]: {
+      maxWidth: '800px',
+      paddingRight: '5px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: '620px',
+    }
+  };
+  const subtitleStyle = {
+    padding: '0px 16px',
+    height: '1.5em',
+    lineHeight: '1.5em',
   };
 
   return (
     <Container component="div" maxWidth="md" sx={containerStyle}>
-      <h1 style={{ padding: '0 5px' }}>DeliveryLogs</h1>
-      <DataGrid rows={logs} columns={columns} getRowId={(row) => row.id}/>
+      <h1 style={subtitleStyle}>Delivery Logs</h1>
+      <DataGrid initialState={{
+        pagination: { paginationModel: { pageSize: 25 } },
+        sorting: {
+          sortModel: [{ field: 'createdTime', sort: 'desc' }],
+        },
+      }} 
+      rows={logs} columns={columns} getRowId={(row) => row.id}/>
     </Container>
   );
 }

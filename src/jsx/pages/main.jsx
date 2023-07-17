@@ -5,8 +5,10 @@ import { Container } from '@mui/material';
 
 export default function Main() {
   const theme = useTheme();
+
   const containerStyle = {
     position: 'static',
+    paddingTop: '10px',
     // border: '2px dashed grey',
     [theme.breakpoints.up('lg')]: {
       maxWidth: '1190px',
@@ -14,6 +16,11 @@ export default function Main() {
     [theme.breakpoints.up('sm')]: {
       paddingRight: '5px',
     }
+  };
+  const subtitleStyle = {
+    padding: '0px 16px',
+    height: '1.5em',
+    lineHeight: '1.5em',
   };
 
   return (

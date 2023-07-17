@@ -58,7 +58,7 @@ const NewDeviceDialog = (props) => {
   return (
     <Dialog open={open} onClose={onClose} sx={{zIndex: (theme) => theme.zIndex.dialog}}>
       <Box component="form" onSubmit={handleSubmit} >
-        <DialogTitle>Register New Delivery Box'</DialogTitle>
+        <DialogTitle>Register New Delivery Box</DialogTitle>
 
         <DialogContent>
           <TextField

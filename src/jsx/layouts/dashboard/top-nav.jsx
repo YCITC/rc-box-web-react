@@ -6,6 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Menu, MenuItem } from '@mui/base';
 import { Avatar, Button } from '@mui/material';
 import { Box, AppBar, Toolbar, Typography, Link, useMediaQuery} from '@mui/material';
+import { Person, AccountCircle } from '@mui/icons-material';
 
 import { LogoBanner, LogoMain } from '../../components/logos.jsx'
 import { useAuth } from '../../hooks/use-auth.jsx';
@@ -33,11 +34,12 @@ export const TopBar = (props) => {
           <LogoBanner />
         </Link>
         <Avatar 
-          sx={{position: 'absolute', right: '10px', cursor: 'pointer'}}
+          sx={{position: 'absolute', right: '10px', cursor: 'pointer', bgcolor: 'avatar'}}
           onClick={accountPopover.handleOpen}
           ref={accountPopover.anchorRef}
           alt={auth.user?auth.user.username:''} src={auth.user?auth.user.avatarUrl:''} 
-        />
+        >
+        </Avatar>
       </Toolbar>
       
       <AccountPopover

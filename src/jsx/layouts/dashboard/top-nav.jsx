@@ -22,7 +22,13 @@ export const TopBar = (props) => {
   const { onNavOpen } = props;
   const auth = useAuth();
   const accountPopover = usePopover();
-  
+  const avatarStyle = {
+    position: 'absolute',
+    right: '10px',
+    cursor: 'pointer',
+    // color: 'avatar',
+    // bgcolor: 'white',
+  }
 
   if (!onNavOpen) return <></>;
   // if (!lgUp) return <></>;
@@ -34,7 +40,7 @@ export const TopBar = (props) => {
           <LogoBanner />
         </Link>
         <Avatar 
-          sx={{position: 'absolute', right: '10px', cursor: 'pointer', bgcolor: 'avatar'}}
+          sx={avatarStyle}
           onClick={accountPopover.handleOpen}
           ref={accountPopover.anchorRef}
           alt={auth.user?auth.user.username:''} src={auth.user?auth.user.avatarUrl:''} 

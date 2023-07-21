@@ -7,6 +7,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useAuth } from '../hooks/use-auth.jsx';
 
 export default function DeliveryLogs() {
+  document.title = 'SHUOO A';
   const auth = useAuth();
   const theme = useTheme();
 

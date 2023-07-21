@@ -15,6 +15,7 @@ import { urlB64ToUint8Array } from '../helper/web-push-notify.jsx';
 
 
 export default function Devices() {
+  document.title = 'SHUOO A';
   const navigate = useNavigate();
   const [devices, setDevices] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);

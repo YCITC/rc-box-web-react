@@ -6,13 +6,20 @@ import { useMediaQuery, Container, Box, Paper, Typography } from '@mui/material'
 
 
 export default function Main() {
+  document.title = 'SHUOO A';
+
   const theme = useTheme();
   const mdUP = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
-  const ImgComponent = ({imgSrc, sx}) => {
-    return <Paper elevation={3} sx={{maxWidth: "600px", width: "100%", marginBottom: '10px', ...sx}}>
-      <img src={imgSrc} style={{maxWidth: "inherit", width: "inherit"}} />
-    </Paper>
+  const ImgComponent = ({imgSrc, sx, contentText}) => {
+    return (
+      <Paper elevation={3} sx={{maxWidth: "600px", width: "100%", marginBottom: '40px', }}>
+        <p style={{padding: '10px 0 0 10px'}}>{contentText}</p>
+        <Paper elevation={2} sx={{maxWidth: "600px", width: "100%", ...sx}}>
+          <img src={imgSrc} style={{maxWidth: "inherit", width: "inherit"}} />
+        </Paper>
+      </Paper>
+    ) 
   };
   
   const containerStyle = {
@@ -26,32 +33,54 @@ export default function Main() {
       paddingRight: '5px',
     }
   };
-  const subtitleStyle = {
-    padding: '0px 16px',
-    height: '1.5em',
-    lineHeight: '1.5em',
-  };
-
   const renderUserGuide = () => {
     if (mdUP === true) {
       return <Box component="div">
-        <ImgComponent imgSrc="imgs/user-guide/account-popover.jpg" />
-        <ImgComponent imgSrc="imgs/user-guide/delivery-box-add.jpg" />
-        <ImgComponent imgSrc="imgs/user-guide/delivery-box-add-dialog.jpg" sx={{width: '400px'}} />
-        <ImgComponent imgSrc="imgs/user-guide/delivery-box-edit.jpg" />
-        <ImgComponent imgSrc="imgs/user-guide/delivery-box-edit-dialog.jpg" sx={{width: '400px'}} />
-        <ImgComponent imgSrc="imgs/user-guide/delivery-logs.jpg" />
-        <ImgComponent imgSrc="imgs/user-guide/delivery-logs-page.jpg" sx={{width: '400px'}} />
+        <ImgComponent imgSrc="imgs/user-guide/account-popover.jpg" 
+          contentText={<>You can click avatar buton to help logout.</>}
+        />
+        <ImgComponent imgSrc="imgs/user-guide/delivery-box-add.jpg" 
+          contentText={<>Got to <b>Delivery Box</b> page to register your <b>Delivery Box</b></>}
+        />
+        <ImgComponent imgSrc="imgs/user-guide/delivery-box-add-dialog.jpg" sx={{width: '400px'}} 
+          contentText={<>After the button is clicked, a dialog will pop up.</>}
+        />
+        <ImgComponent imgSrc="imgs/user-guide/delivery-box-edit.jpg" 
+          contentText={<>You can edit your "delivery box info".</>}
+        />
+        <ImgComponent imgSrc="imgs/user-guide/delivery-box-edit-dialog.jpg" sx={{width: '400px'}} 
+          contentText={<></>}
+        />
+        <ImgComponent imgSrc="imgs/user-guide/delivery-logs.jpg" 
+          contentText={<>You can view your delivery logs.</>}
+        />
+        <ImgComponent imgSrc="imgs/user-guide/delivery-logs-page.jpg" sx={{width: '400px'}} 
+          contentText={<>After the button is clicked, a dialog will pop up.</>}
+        />
       </Box>
     } else {
       return <Box component="div">
-        <ImgComponent imgSrc="imgs/user-guide/account-popover.mobile.jpg" />
-        <ImgComponent imgSrc="imgs/user-guide/delivery-box-add.mobile.jpg" />
-        <ImgComponent imgSrc="imgs/user-guide/delivery-box-add-dialog.jpg" sx={{width: '400px'}} />
-        <ImgComponent imgSrc="imgs/user-guide/delivery-box-edit.mobile.jpg" />
-        <ImgComponent imgSrc="imgs/user-guide/delivery-box-edit-dialog.jpg" sx={{width: '400px'}} />
-        <ImgComponent imgSrc="imgs/user-guide/delivery-logs.mobile.jpg" />
-        <ImgComponent imgSrc="imgs/user-guide/delivery-logs-page.jpg" sx={{width: '400px'}} />
+        <ImgComponent imgSrc="imgs/user-guide/account-popover.mobile.jpg" 
+          contentText={<>You can click avatar buton, it will guide you to other pages.</>}
+        />
+        <ImgComponent imgSrc="imgs/user-guide/delivery-box-add.mobile.jpg" 
+          contentText={<>Got to <b>Delivery Box</b> page to register your <b>Delivery Box</b></>}
+        />
+        <ImgComponent imgSrc="imgs/user-guide/delivery-box-add-dialog.jpg" sx={{width: '400px'}} 
+          contentText={<>After the button is clicked, a dialog will pop up.</>}
+        />
+        <ImgComponent imgSrc="imgs/user-guide/delivery-box-edit.mobile.jpg" 
+          contentText={<>You can edit your "delivery box info".</>}
+        />
+        <ImgComponent imgSrc="imgs/user-guide/delivery-box-edit-dialog.jpg" sx={{width: '400px'}} 
+          contentText={<></>}
+        />
+        <ImgComponent imgSrc="imgs/user-guide/delivery-logs.mobile.jpg" 
+          contentText={<>You can view your delivery logs.</>}
+        />
+        <ImgComponent imgSrc="imgs/user-guide/delivery-logs-page.jpg" sx={{width: '400px'}} 
+          contentText={<>After the button is clicked, a dialog will pop up.</>}
+        />
       </Box>
     }
   };

@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link as RLink, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-import CssBaseline from '@mui/material/CssBaseline';
 import { TextField, FormControlLabel} from '@mui/material';
 import { Container, Typography, Box, Grid, Link, Checkbox, Avatar, Button} from '@mui/material';
 import { Snackbar, Alert } from '@mui/material';
 import { Backdrop, CircularProgress } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import Copyright from '../components/copyright.jsx';
 import { useAuth } from '../hooks/use-auth.jsx';

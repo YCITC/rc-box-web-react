@@ -2,10 +2,8 @@ import React, { useEffect, useState} from 'react';
 import { Link as RLink, useNavigate }  from 'react-router-dom';
 import axios from 'axios';
 
-import CssBaseline from '@mui/material/CssBaseline';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Typography, Container, Box, Grid, Link } from '@mui/material';
-import { Avatar, Button, TextField } from '@mui/material';
+import { Container, Box, Grid, Link } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import { InputAdornment } from '@mui/material';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -129,7 +127,6 @@ export default function SignUp() {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 4,

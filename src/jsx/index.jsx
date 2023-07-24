@@ -8,8 +8,8 @@ import packageJson from '../../package.json';
 
 // pages
 import Main from './pages/main.jsx';
-import SignIn from './pages/SignIn.jsx';
-import SignUp from './pages/SignUp.jsx';
+import SignIn from './pages/sign-in.jsx';
+import SignUp from './pages/sign-up.jsx';
 import LandingPage from './pages/landing.jsx';
 import Devices from './pages/devices.jsx';
 import DeliveryLogs from './pages/logs.jsx';

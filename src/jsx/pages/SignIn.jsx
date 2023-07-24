@@ -65,7 +65,7 @@ export default function SignIn() {
       const now = new Date();
       const user = response.data.user;
       const token = response.data.access_token
-      console.log('[SingIn] user: ', user);
+      // console.log('[SingIn] user: ', user);
 
       localStorage.setItem('user', JSON.stringify(user));
       localStorage.setItem('token', token);
@@ -81,6 +81,7 @@ export default function SignIn() {
         case 'Cannot find user':
         case 'email or password incorrect':
           setOpenSnackbarState({open: true, message: 'Incorrect email or password'})
+          setOpenBackdrop(false);
           break;
         default:
           console.error('error res: ', res);
@@ -122,6 +123,7 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value="1234"
           />
           <FormControlLabel
             control={<Checkbox name="remember" id="remember" value="true" color="primary" 

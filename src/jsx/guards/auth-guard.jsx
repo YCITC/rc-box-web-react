@@ -20,7 +20,7 @@ export const AuthGuard = (props) => {
 
     pathname = location.pathname;
 
-    console.log('[auth-guard] path: ', pathname)
+    // console.log('[auth-guard] path: ', pathname)
     switch (pathname) {
       case '/devices':
       case '/delivery-logs':

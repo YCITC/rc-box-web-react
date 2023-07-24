@@ -51,7 +51,7 @@ export default function SignUp() {
       }
     })
     .then((response)=>{
-      console.log('response: ', response);
+      // console.log('response: ', response);
       // console.log(response.status == 200)
       setDialogOpen(true);
     })

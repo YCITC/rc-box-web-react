@@ -106,6 +106,7 @@ export const DashboardLayout = withAuthGuard(
           case '/landing':
           case '/signin':
           case '/signup':
+          case '/email-verify':
             if (openNav) setOpenNav(false);
             // handlePathnameChange()
             break;

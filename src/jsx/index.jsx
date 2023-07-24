@@ -19,6 +19,7 @@ import { DashboardLayout } from './layouts/dashboard/layout.jsx';
 
 // context
 import { AuthProvider } from './contexts/auth-context.jsx';
+import EmailVerify from './pages/email-verify.jsx';
 
 
 const defaultTheme = createTheme({
@@ -76,6 +77,7 @@ function LayoutWrapper() {
         <Route path="/" element={<Main />} />
         <Route path="/signin" element={<SignIn />} showLayout={false} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/email-verify" element={<EmailVerify />} />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/devices" element={<Devices />} />
         <Route path="/delivery-logs" element={<DeliveryLogs />} />

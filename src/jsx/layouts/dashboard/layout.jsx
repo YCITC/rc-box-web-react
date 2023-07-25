@@ -103,15 +103,19 @@ export const DashboardLayout = withAuthGuard(
       () => {
         // console.log('[layout] pathname: ', pathname)
         switch (pathname) {
-          case '/landing':
-          case '/signin':
-          case '/signup':
-          case '/email-verify':
-            if (openNav) setOpenNav(false);
-            // handlePathnameChange()
-            break;
-          default:
+          case '/':
+          case '/devices':
+          case '/delivery-logs':
             if (!openNav) setOpenNav(true);
+            break;
+          // case '/landing':
+          // case '/signin':
+          // case '/signup':
+          // case '/email-verify':
+          //   if (openNav) setOpenNav(false);
+          //   break;
+          default:
+            if (openNav) setOpenNav(false);
             break;
         }
       },

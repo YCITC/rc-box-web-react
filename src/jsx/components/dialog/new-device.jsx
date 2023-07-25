@@ -38,7 +38,7 @@ const NewDeviceDialog = (props) => {
         'Authorization': 'Bearer ' + auth.token
       }
     }).then((response) => {
-      console.log('[new-device]', response);
+      // console.log('[new-device]', response);
       if (response.status == 200) {
         setBackdropOpen(false);
         onClose();

@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link as RLink, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-import CssBaseline from '@mui/material/CssBaseline';
 import { TextField, FormControlLabel} from '@mui/material';
 import { Container, Typography, Box, Grid, Link, Checkbox, Avatar, Button} from '@mui/material';
 import { Snackbar, Alert } from '@mui/material';
 import { Backdrop, CircularProgress } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import Copyright from '../components/copyright.jsx';
 import { useAuth } from '../hooks/use-auth.jsx';
@@ -65,7 +63,7 @@ export default function SignIn() {
       const now = new Date();
       const user = response.data.user;
       const token = response.data.access_token
-      console.log('[SingIn] user: ', user);
+      // console.log('[SingIn] user: ', user);
 
       localStorage.setItem('user', JSON.stringify(user));
       localStorage.setItem('token', token);
@@ -81,6 +79,7 @@ export default function SignIn() {
         case 'Cannot find user':
         case 'email or password incorrect':
           setOpenSnackbarState({open: true, message: 'Incorrect email or password'})
+          setOpenBackdrop(false);
           break;
         default:
           console.error('error res: ', res);
@@ -122,6 +121,7 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value="1234"
           />
           <FormControlLabel
             control={<Checkbox name="remember" id="remember" value="true" color="primary" 

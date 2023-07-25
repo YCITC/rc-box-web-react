@@ -1,13 +1,15 @@
 import React, { createContext, useContext, useState } from 'react';
-import { Routes, Route } from "react-router-dom";
-import { BrowserRouter, Link } from "react-router-dom";
+import axios from 'axios';
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import {  } from "react-router-dom";
 import { createRoot } from 'react-dom/client';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import packageJson from '../../package.json';
 
 // pages
 import Main from './pages/main.jsx';
-import SignIn from './pages/SignIn.jsx';
-import SignUp from './pages/SignUp.jsx';
+import SignIn from './pages/sign-in.jsx';
+import SignUp from './pages/sign-up.jsx';
 import LandingPage from './pages/landing.jsx';
 import Devices from './pages/devices.jsx';
 import DeliveryLogs from './pages/logs.jsx';
@@ -17,6 +19,7 @@ import { DashboardLayout } from './layouts/dashboard/layout.jsx';
 
 // context
 import { AuthProvider } from './contexts/auth-context.jsx';
+import EmailVerify from './pages/email-verify.jsx';
 
 
 const defaultTheme = createTheme({
@@ -74,6 +77,7 @@ function LayoutWrapper() {
         <Route path="/" element={<Main />} />
         <Route path="/signin" element={<SignIn />} showLayout={false} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/email-verify" element={<EmailVerify />} />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/devices" element={<Devices />} />
         <Route path="/delivery-logs" element={<DeliveryLogs />} />
@@ -83,7 +87,13 @@ function LayoutWrapper() {
 }
 
 const App = (props) => {
-  // console.clear();
+  axios.get('/api/version').then((res) => {
+    window.versionInfo = {
+      'API': res.data,
+      'WEB': packageJson.version
+    };
+  })
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <BrowserRouter>

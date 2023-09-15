@@ -13,6 +13,7 @@ import SignUp from './pages/sign-up.jsx';
 import LandingPage from './pages/landing.jsx';
 import Devices from './pages/devices.jsx';
 import DeliveryLogs from './pages/logs.jsx';
+import PrivacyPolicy from './pages/privacy-policy.jsx';
 
 // components
 import { DashboardLayout } from './layouts/dashboard/layout.jsx';
@@ -82,6 +83,7 @@ function LayoutWrapper() {
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/devices" element={<Devices />} />
         <Route path="/delivery-logs" element={<DeliveryLogs />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </DashboardLayout>

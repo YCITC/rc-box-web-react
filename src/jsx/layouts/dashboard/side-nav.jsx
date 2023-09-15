@@ -62,6 +62,7 @@ export const SideNav = (props) => {
   ];
   const content = (
     <Scrollbar
+      id="side-nav"
       sx={{
         height: '100%',
         '& .simplebar-content': {
@@ -146,13 +147,6 @@ export const SideNav = (props) => {
       variant={open?"permanent":"temporary"}
     >
       {content}
-      {/* <SimpleBar 
-        autoHide={false} forceVisible={false}
-      >
-        <div className="gray-zone">
-          
-        </div>
-      </SimpleBar> */}
     </Drawer>
   );
 };

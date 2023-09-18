@@ -3,7 +3,7 @@ import { Link as RLink, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 import { TextField, FormControlLabel} from '@mui/material';
-import { Container, Typography, Box, Grid, Link, Checkbox, Avatar, Button} from '@mui/material';
+import { Container, Box, Grid, Link, Checkbox, Button} from '@mui/material';
 import { Snackbar, Alert } from '@mui/material';
 import { Backdrop, CircularProgress } from '@mui/material';
 
@@ -121,7 +121,6 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
-            value="1234"
           />
           <FormControlLabel
             control={<Checkbox name="remember" id="remember" value="true" color="primary" 
@@ -137,6 +136,15 @@ export default function SignIn() {
             sx={{ mt: 3, mb: 2 , fontSize: '2em'}}
           >
             Sign In
+          </Button>
+          <Button
+            type="button"
+            fullWidth
+            variant="contained"
+            href="/api/auth/google"
+            sx={{ mt: 3, mb: 2 , fontSize: '2em'}}
+          >
+            Sign In With Google
           </Button>
           <Grid container>
             <Grid item xs hidden>

@@ -239,7 +239,16 @@ export default function SignUp() {
             sx={{ mt: 3, mb: 2, fontSize: '2em'}}
           >
             Sign Up
-          </Button> 
+          </Button>
+          <Button
+            type="button"
+            fullWidth
+            variant="contained"
+            href="/api/auth/google"
+            sx={{ mt: 3, mb: 2 , fontSize: '2em'}}
+          >
+            Sign Up With Google
+          </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link to="/signin" variant="body2" component={RLink}>

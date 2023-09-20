@@ -67,7 +67,7 @@ export default function SignUp() {
         setUsernameError({state: true, message:'2 to 16 characters'})
         break;
       case 'password':
-        setPasswordError({state: true, message:'least 8 characters, has number, lowercase letter, uppercase letter'})
+        setPasswordError({state: true, message:'least 8 characters, has number, lowercase letter, uppercase letter, special characters'})
         break;
     }
 
@@ -99,7 +99,7 @@ export default function SignUp() {
           onMouseOut={handlePasswordVisible}  />
       </InputAdornment>
     )}}
-    inputProps={{pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}"}}
+    inputProps={{pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*#?&]).{8,}"}}
     onInvalid={handleInputInvalid}
     error={passwordError.state}
     helperText={passwordError.message}

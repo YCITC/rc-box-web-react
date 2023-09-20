@@ -84,6 +84,10 @@ export const AuthProvider = (props) => {
       type: 'SIGN_OUT',
     });
 
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('tokenCreateTime');
+
     navigate('/landing');
   };
 
@@ -110,9 +114,9 @@ export const AuthProvider = (props) => {
       // console.log('[auth-context] now: \t\t\t', now.toISOString())
 
       if (diffDate >= 30) {
-        localStorage.removeItem('user')
-        localStorage.removeItem('token')
-        localStorage.removeItem('tokenCreateTime')
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        localStorage.removeItem('tokenCreateTime');
         navigate('/signin');
         return;
       }

@@ -25,7 +25,7 @@ export const AccountPopover = (props) => {
   useEffect(() => {
     const items = [];
     if (auth.isSignIn) {
-      console.log('isSignIn')
+      // console.log('isSignIn')
       items.push(
         <MenuItem key="mitem-singout" onClick={handleSignOut}>
           Sign out

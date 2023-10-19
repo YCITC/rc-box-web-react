@@ -22,14 +22,14 @@ export default function OAuthRedirect() {
     oauthLogin();
   }, [search])
   const oauthLogin = () => {
-    console.log('OAuth Login');
-    console.log(search)
+    // console.log('OAuth Login');
+    // console.log(search)
     // let params = new URLSearchParams(search);
     // console.log(params)
     // http://localhost:3000/api/auth/google/callback
     axios.get('/api/auth/google/callback'+search)
     .then((response) => {
-      console.log('api resp: ', response.data);
+      // console.log('api resp: ', response.data);
 
       const now = new Date();
       const user = response.data.user;
@@ -41,7 +41,7 @@ export default function OAuthRedirect() {
       
       auth.signIn(user, token);
       setOpenBackdrop(false);
-      console.log('[SingIn] user: ', user);
+      // console.log('[SingIn] user: ', user);
       navigate('/');
     }).catch(error => {
     });

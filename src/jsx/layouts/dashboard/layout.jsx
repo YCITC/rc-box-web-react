@@ -107,6 +107,7 @@ export const DashboardLayout = withAuthGuard(
           case '/devices':
           case '/delivery-logs':
           case '/oauth-redirect':
+          case '/profile':
             if (!openNav) setOpenNav(true);
             break;
           // case '/landing':

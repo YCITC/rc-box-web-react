@@ -31,6 +31,11 @@ export const AccountPopover = (props) => {
           Sign out
         </MenuItem>
       )
+      items.unshift(
+        <MenuItem key="mitem-profile" onClick={()=>navigate('/profile')}>
+          Profile
+        </MenuItem>
+      )
     } else {
       items.push(
         <MenuItem key="mitem-singin"  onClick={()=>{navigate('/signin')}}>

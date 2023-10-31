@@ -4,10 +4,9 @@ import axios from 'axios';
 
 import { Container, Box, Grid, Link } from '@mui/material';
 import { Button, TextField } from '@mui/material';
-import { InputAdornment } from '@mui/material';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 
+import TextFieldPassword from '../components/text-field/password.jsx';
 import { LogoMain } from '../components/logos.jsx';
 import Copyright from '../components/copyright.jsx';
 
@@ -18,12 +17,10 @@ export default function SignUp() {
   useEffect(()=> {
     document.title = 'RC Box - Sign Up';
   }, []);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [passwordCheckError, setPasswordCheckError] = useState({state: false, message: ''});
   const [usernameError, setUsernameError] = useState({state: false, message: ''});
   const [emailError, setEmailError] = useState({state: false, message: ''});
-  const [passwordError, setPasswordError] = useState({state: false, message: ''});
-  const [passwordCheckError, setPasswordCheckError] = useState({state: false, message: ''});
-  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -31,6 +28,7 @@ export default function SignUp() {
     event.preventDefault();
 
     setEmailError({state: false, message: ''})
+    setPasswordCheckError({state: false, message: ''});
 
     const data = new FormData(event.currentTarget);
 
@@ -42,7 +40,6 @@ export default function SignUp() {
     const dataObj = Object.fromEntries(data.entries());
     const json = JSON.stringify(dataObj)
 
-    setPasswordCheckError({state: false, message: ''});
     axios.put('/api/auth/createUser', json, {
       headers: {
         'Content-Type': 'application/json'
@@ -66,44 +63,12 @@ export default function SignUp() {
       case 'userName':
         setUsernameError({state: true, message:'2 to 16 characters'})
         break;
-      case 'password':
-        setPasswordError({state: true, message:'least 8 characters, has number, lowercase letter, uppercase letter, special characters'})
-        break;
     }
-
   }
-  const handlePasswordVisible = (event) => {
-    event.preventDefault();
-    if(event.type === 'mousedown') setPasswordVisible(true)
-    if(event.type === 'mouseup') setPasswordVisible(false)
-    if(event.type === 'mouseout') setPasswordVisible(false)
-  };
   const handleDialogClose = () => {
     setDialogOpen(false);
     navigate('/signin')
   };
-
-  const renderPasswordTextField = () => <TextField
-    required
-    fullWidth
-    name="password"
-    label="Password"
-    type={passwordVisible==true?"text":"password"}
-    id="password"
-    autoComplete="new-password"
-    InputProps={{endAdornment: (
-      <InputAdornment position="end">
-        <VisibilityIcon sx={{cursor: 'pointer'}} 
-          onMouseDown={handlePasswordVisible}
-          onMouseUp={handlePasswordVisible}
-          onMouseOut={handlePasswordVisible}  />
-      </InputAdornment>
-    )}}
-    inputProps={{pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*#?&]).{8,}"}}
-    onInvalid={handleInputInvalid}
-    error={passwordError.state}
-    helperText={passwordError.message}
-  />;
   const renderDialog = () =>  <Dialog
     open={dialogOpen}
     onClose={handleDialogClose}
@@ -163,7 +128,6 @@ export default function SignUp() {
                 name="email"
                 autoComplete="email"
                 type='email'
-                inputProps={{pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'}}
                 helperText={emailError.message}
                 error={emailError.state}
               />
@@ -211,17 +175,22 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={12}>
-              {renderPasswordTextField()}
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
+              <TextFieldPassword
                 required
                 fullWidth
+                margin="normal"
+                id="password"
+                name="password"
+                label="Password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextFieldPassword
+                required
+                fullWidth
+                id="passwordCheck"
                 name="passwordCheck"
                 label="Password Check"
-                type="password"
-                id="passwordCheck"
-                onInvalid={handleInputInvalid}
                 helperText={passwordCheckError.message}
                 error={passwordCheckError.state}
               />
@@ -257,8 +226,6 @@ export default function SignUp() {
             </Grid>
           </Grid>
         </Box>
-        {/* <FormControl variant='filled' onSubmit={handleSubmit} sx={{ mt: 3 }}>
-        </FormControl> */}
       </Box>
       <Copyright sx={{ mt: 5 }} />
       {renderDialog()}

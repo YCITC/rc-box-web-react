@@ -16,14 +16,13 @@ export default function SignIn() {
   const navigate = useNavigate();
   const [emailState, setEmailState] = useState('');
   const [openBackdrop, setOpenBackdrop] = useState(false);
-  const [openSnackbarState, setOpenSnackbarState] = useState({open: false, message: ''});
+  const [openSnackbarState, setOpenSnackbarState] = useState({open: false, severity: '', message: ''});
   const [rememberState, setRememberState] = useState(false);
   const auth = useAuth();
 
   useEffect(()=>{
     document.title = 'RC Box - Sign In';
     if (localStorage.getItem('userEmail') !== null) {
-      email = localStorage.getItem('userEmail');
       setEmailState(localStorage.getItem('userEmail'))
       setRememberState(true);
     }
@@ -31,7 +30,7 @@ export default function SignIn() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setOpenBackdrop(true);
+    // setOpenBackdrop(true);
     const data = new FormData(event.currentTarget);
 
     // Storage user email to local storage
@@ -41,7 +40,7 @@ export default function SignIn() {
       localStorage.removeItem('userEmail');
     }
 
-    if (openSnackbarState.open == true ) setOpenSnackbarState({open: false, message: ''})
+    if (openSnackbarState.open == true ) setOpenSnackbarState({open: false, severity:'', message: ''})
 
     // Call login API
     const dataObj = Object.fromEntries(data.entries());
@@ -70,7 +69,7 @@ export default function SignIn() {
       localStorage.setItem('tokenCreateTime', now.toISOString());
 
       auth.signIn(user, token);
-      setOpenBackdrop(false);
+      // setOpenBackdrop(false);
       navigate('/');
     })
     .catch((error)=>{
@@ -78,8 +77,8 @@ export default function SignIn() {
       switch (res.message) {
         case 'Cannot find user':
         case 'email or password incorrect':
-          setOpenSnackbarState({open: true, message: 'Incorrect email or password'})
-          setOpenBackdrop(false);
+          setOpenSnackbarState({open: true, severity: 'error', message: 'Incorrect email or password'})
+          // setOpenBackdrop(false);
           break;
         default:
           console.error('error res: ', res);
@@ -107,8 +106,8 @@ export default function SignIn() {
             label="Email Address"
             name="email"
             autoComplete="email"
+            type="email"
             autoFocus
-            inputProps={{pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'}}
             value={emailState}
             onChange={(event) => setEmailState(event.target.value)}
           />
@@ -148,7 +147,7 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs hidden>
-              <Link href="#" variant="body2">
+              <Link href="/forget-password" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
@@ -161,8 +160,8 @@ export default function SignIn() {
         </Box>
       </Box>
       <Copyright sx={{ mt: 8, mb: 4 }} />
-      <Snackbar open={openSnackbarState.open} autoHideDuration={6000} >
-        <Alert severity="error" sx={{ width: '100%' }}>
+      <Snackbar open={openSnackbarState.open} autoHideDuration={3000} onClose={() => setOpenSnackbarState({open: false, severity: '', message: ''})} >
+        <Alert severity={openSnackbarState.severity} sx={{ width: '100%' }}>
           {openSnackbarState.message}
         </Alert>
       </Snackbar>

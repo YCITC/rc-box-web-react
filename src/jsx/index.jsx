@@ -24,6 +24,7 @@ import { AuthProvider } from './contexts/auth-context.jsx';
 import EmailVerify from './pages/email-verify.jsx';
 import Error404 from './pages/error404.jsx';
 import Profile from './pages/profile.jsx';
+import ForgetPassword from './pages/forget-password.jsx';
 
 
 const defaultTheme = createTheme({
@@ -79,8 +80,9 @@ function LayoutWrapper() {
     <DashboardLayout>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/signin" element={<SignIn />} showLayout={false} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/sign-in" element={<SignIn />} showLayout={false} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/email-verify" element={<EmailVerify />} />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/devices" element={<Devices />} />

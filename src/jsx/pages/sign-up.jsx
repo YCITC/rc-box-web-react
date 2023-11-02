@@ -220,7 +220,7 @@ export default function SignUp() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link to="/signin" variant="body2" component={RLink}>
+              <Link to="/sign-in" variant="body2" component={RLink}>
                 Already have an account? Sign in
               </Link>
             </Grid>

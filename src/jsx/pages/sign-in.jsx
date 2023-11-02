@@ -146,13 +146,13 @@ export default function SignIn() {
             Sign In With Google
           </Button>
           <Grid container>
-            <Grid item xs hidden>
-              <Link href="/forget-password" variant="body2">
+            <Grid item xs>
+              <Link to="/forget-password" variant="body2" component={RLink}>
                 Forgot password?
               </Link>
             </Grid>
-            <Grid item xs sx={{textAlign: "right"}}>
-              <Link to="/signup" variant="body2" component={RLink}>
+            <Grid item xl sx={{textAlign: "right"}}>
+              <Link to="/sign-up" variant="body2" component={RLink}>
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

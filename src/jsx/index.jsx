@@ -23,6 +23,7 @@ import { DashboardLayout } from './layouts/dashboard/layout.jsx';
 import { AuthProvider } from './contexts/auth-context.jsx';
 import EmailVerify from './pages/email-verify.jsx';
 import Error404 from './pages/error404.jsx';
+import Profile from './pages/profile.jsx';
 
 
 const defaultTheme = createTheme({
@@ -86,6 +87,7 @@ function LayoutWrapper() {
         <Route path="/delivery-logs" element={<DeliveryLogs />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/oauth-redirect" element={<OAuthRedirect />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </DashboardLayout>

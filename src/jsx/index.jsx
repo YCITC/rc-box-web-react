@@ -24,6 +24,7 @@ import { AuthProvider } from './contexts/auth-context.jsx';
 import EmailVerify from './pages/email-verify.jsx';
 import Error404 from './pages/error404.jsx';
 import Profile from './pages/profile.jsx';
+import ResetPassword from './pages/reset-password.jsx';
 import ForgetPassword from './pages/forget-password.jsx';
 
 
@@ -83,6 +84,7 @@ function LayoutWrapper() {
         <Route path="/sign-in" element={<SignIn />} showLayout={false} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/email-verify" element={<EmailVerify />} />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/devices" element={<Devices />} />

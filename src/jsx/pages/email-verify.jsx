@@ -61,7 +61,7 @@ export default function EmailVerify() {
   }, [verifyStart] )
 
   useEffect(() => {
-    if (redirectTimer === 0) navigate("/signin");
+    if (redirectTimer === 0) navigate("/sign-in");
     if (redirectTimer === undefined || redirectTimer === 0) return;
     setTimeout(() => {
       setRedirectTimer(redirectTimer-1);
@@ -80,7 +80,7 @@ export default function EmailVerify() {
     const formData = new FormData(event.currentTarget);
     axios.get('/api/auth/emailResend/'+formData.get('email'))
       .catch((error) => {
-        if (error.response.data.message == 'EmailVerified') navigate("/signin");
+        if (error.response.data.message == 'EmailVerified') navigate("/sign-in");
         setOpenSnackbarState({open: true, message: error.response.data.message})
       })
     localStorage.setItem('resendTimer', new Date());
@@ -97,7 +97,7 @@ export default function EmailVerify() {
       </Typography>
       <Typography variant="body2" paragraph  sx={{width: '100%'}}>
         We will redirect you to the login page in {redirectTimer!==undefined?redirectTimer:'5'} seconds. 
-        <Link to="/signin" variant="body2" component={RLink} sx={{ml: '10px'}}>
+        <Link to="/sign-in" variant="body2" component={RLink} sx={{ml: '10px'}}>
           Or goto Sign in page
         </Link>
       </Typography>

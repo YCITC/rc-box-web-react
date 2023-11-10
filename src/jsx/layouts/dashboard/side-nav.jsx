@@ -37,7 +37,7 @@ export const SideNav = (props) => {
     },
     // {
     //   title: 'SignIn',
-    //   path: '/signin',
+    //   path: '/sign-in',
     //   icon: (
     //     <SvgIcon fontSize="small">
     //     </SvgIcon>
@@ -45,7 +45,7 @@ export const SideNav = (props) => {
     // },
     // {
     //   title: 'SignUp',
-    //   path: '/signup',
+    //   path: '/sign-up',
     //   icon: (
     //     <SvgIcon fontSize="small">
     //     </SvgIcon>

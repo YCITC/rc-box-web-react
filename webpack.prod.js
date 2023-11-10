@@ -1,7 +1,7 @@
 const path = require('path');
 const devConfig = require('./webpack.config.js')
 
-let dist = "../iot-server/client";
+let dist = "../iot-server/frontend";
 module.exports = {
   ...devConfig,
   mode: 'production',

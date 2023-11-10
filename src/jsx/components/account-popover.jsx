@@ -38,7 +38,7 @@ export const AccountPopover = (props) => {
       )
     } else {
       items.push(
-        <MenuItem key="mitem-singin"  onClick={()=>{navigate('/signin')}}>
+        <MenuItem key="mitem-singin"  onClick={()=>{navigate('/sign-in')}}>
           Sign in
         </MenuItem>
       )

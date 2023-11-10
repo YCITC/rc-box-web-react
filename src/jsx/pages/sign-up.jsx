@@ -67,7 +67,7 @@ export default function SignUp() {
   }
   const handleDialogClose = () => {
     setDialogOpen(false);
-    navigate('/signin')
+    navigate('/sign-in')
   };
   const renderDialog = () =>  <Dialog
     open={dialogOpen}

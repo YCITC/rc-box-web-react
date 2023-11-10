@@ -111,8 +111,8 @@ export const DashboardLayout = withAuthGuard(
             if (!openNav) setOpenNav(true);
             break;
           // case '/landing':
-          // case '/signin':
-          // case '/signup':
+          // case '/sign-in':
+          // case '/sign-up':
           // case '/email-verify':
           //   if (openNav) setOpenNav(false);
           //   break;

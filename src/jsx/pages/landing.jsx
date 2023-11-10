@@ -30,7 +30,7 @@ export default function LandingPage() {
         <Button variant="contained" 
           color="primary"
           sx={{ p: 2, border: '1px dashed grey', width: '100%', fontSize: '24px'}} 
-          href="/signup">
+          href="/sign-up">
           SIGN UP
         </Button>
       </Typography>

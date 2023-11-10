@@ -16,7 +16,7 @@ export default function SignIn() {
   const navigate = useNavigate();
   const [emailState, setEmailState] = useState('');
   const [openBackdrop, setOpenBackdrop] = useState(false);
-  const [openSnackbarState, setOpenSnackbarState] = useState({open: false, severity: '', message: ''});
+  const [openSnackbarState, setOpenSnackbarState] = useState({open: false, severity: 'error', message: ''});
   const [rememberState, setRememberState] = useState(false);
   const auth = useAuth();
 
@@ -40,7 +40,7 @@ export default function SignIn() {
       localStorage.removeItem('userEmail');
     }
 
-    if (openSnackbarState.open == true ) setOpenSnackbarState({open: false, severity:'', message: ''})
+    if (openSnackbarState.open == true ) setOpenSnackbarState({open: false, severity: 'error', message: ''})
 
     // Call login API
     const dataObj = Object.fromEntries(data.entries());

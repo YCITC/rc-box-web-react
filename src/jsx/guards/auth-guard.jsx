@@ -25,7 +25,7 @@ export const AuthGuard = (props) => {
       case '/devices':
       case '/delivery-logs':
         // console.log('[auth-guard] redirecting to sign in page')
-        navigate('/signin');
+        navigate('/sign-in');
         break;
       default:
         break;

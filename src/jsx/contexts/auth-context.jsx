@@ -117,7 +117,7 @@ export const AuthProvider = (props) => {
         localStorage.removeItem('user');
         localStorage.removeItem('token');
         localStorage.removeItem('tokenCreateTime');
-        navigate('/signin');
+        navigate('/sign-in');
         return;
       }
       if (diffDate >= 15) {

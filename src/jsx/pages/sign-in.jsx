@@ -59,16 +59,7 @@ export default function SignIn() {
       }
     })
     .then(async (response)=>{
-      const now = new Date();
-      const user = response.data.user;
-      const token = response.data.access_token
-      // console.log('[SingIn] user: ', user);
-
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('token', token);
-      localStorage.setItem('tokenCreateTime', now.toISOString());
-
-      auth.signIn(user, token);
+      auth.signIn(response.data.user, response.data.accessToken);
       // setOpenBackdrop(false);
       navigate('/');
     })

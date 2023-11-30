@@ -30,14 +30,8 @@ export default function OAuthRedirect() {
     axios.get('/api/auth/google/callback'+search)
     .then((response) => {
       // console.log('api resp: ', response.data);
-
-      const now = new Date();
       const user = response.data.user;
       const token = response.data.access_token
-      
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('token', token);
-      localStorage.setItem('tokenCreateTime', now.toISOString());
       
       auth.signIn(user, token);
       setOpenBackdrop(false);

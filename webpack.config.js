@@ -54,6 +54,7 @@ module.exports = {
     },
     historyApiFallback: true,
     // open: true,
+    // host: 'http://rc-box.yesseecity.com',  // Only localhost cant connect to the server on your browser
     port: 8080,
     proxy: {
       // '/api/*': 'http://34.80.129.4'

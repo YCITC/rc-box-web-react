@@ -104,6 +104,7 @@ export const DashboardLayout = withAuthGuard(
         // console.log('[layout] pathname: ', pathname)
         switch (pathname) {
           case '/':
+          case '/dashboard':
           case '/devices':
           case '/delivery-logs':
           case '/oauth-redirect':

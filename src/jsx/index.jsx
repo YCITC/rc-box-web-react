@@ -15,6 +15,7 @@ import Devices from './pages/devices.jsx';
 import DeliveryLogs from './pages/logs.jsx';
 import PrivacyPolicy from './pages/privacy-policy.jsx';
 import OAuthRedirect from './pages/oauth-redirect.jsx';
+import Dashboard from './pages/dashboard.jsx';
 
 // components
 import { DashboardLayout } from './layouts/dashboard/layout.jsx';
@@ -92,6 +93,7 @@ function LayoutWrapper() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/oauth-redirect" element={<OAuthRedirect />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </DashboardLayout>

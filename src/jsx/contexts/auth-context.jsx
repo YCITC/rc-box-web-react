@@ -129,6 +129,9 @@ export const AuthProvider = (props) => {
       isAuthenticated = true;
       user = JSON.parse(localStorage.getItem('user'));
       token = sessionStorage.getItem('token');
+    } else {
+      navigate('/sign-in');
+      return;
     }
     // console.log('[auth-context] isAuthenticated:', isAuthenticated)
 

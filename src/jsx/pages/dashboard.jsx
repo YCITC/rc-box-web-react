@@ -11,12 +11,11 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-
+import { useNavigate } from 'react-router-dom';
 import { Pagination } from '@mui/material';
 import { useTheme, styled } from '@mui/material/styles';
 import { Line } from 'react-chartjs-2';
 import { Grid, Paper } from '@mui/material';
-
 
 import PageContainer from '../components/page-container.jsx';
 import Subtitle from '../components/subtitle.jsx';
@@ -37,7 +36,9 @@ export default function Dashboard() {
   document.title = 'SHUOO A';
   const auth = useAuth();
   const theme = useTheme();
+  const navigate = useNavigate();
   const [activeUsers7Days, setActiveUsers7Days] = useState(0);
+  const [activeUsersToday, setActiveUsersToday] = useState(null);
   const [activeUsersHistory, setActiveUsersHistory] = useState([]);
   const [users, setUsers] = useState([]);
 
@@ -50,12 +51,11 @@ export default function Dashboard() {
   });
 
   useEffect(() => {
-    getAverageActive()
-    getUsers()
-  }, [])
-
-  useEffect(() => {
     if (auth.token === null) return; 
+    if (auth.user.id !== 1) navigate('/')
+    getAverageActive()
+    getTodayActiveSession()
+    getUsers()
   }, [auth.token])
 
   const charOptions = {
@@ -66,7 +66,7 @@ export default function Dashboard() {
       },
       title: {
         display: true,
-        text: 'Active users in 7 days',
+        text: 'Active users',
       },
     },
   };
@@ -74,7 +74,7 @@ export default function Dashboard() {
   const labels = useMemo(() => {
     let theDaty = dayjs()
     let days = []
-    for(let i = 0; i < 7; i++) {
+    for(let i = 0; i < 8; i++) {
       theDaty = theDaty.subtract(1 ,'day')
       days.push(theDaty.format('M/D'))
     }
@@ -87,14 +87,29 @@ export default function Dashboard() {
     labels,
     datasets: [
       {
-        label: 'Average: ' + activeUsers7Days.toFixed(3),
+        label: 'Average in the last 7 days: ' + activeUsers7Days.toFixed(3),
         data: activeUsersHistory,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
+      {
+        label: 'Today active',
+        data: [].concat(new Array(7).fill(null), [activeUsersToday]),
+        borderColor: 'rgb(149, 151, 253)',
+        backgroundColor: 'rgba(149, 151, 253, 0.5)',
+      },
     ],
   };
 
+  const getTodayActiveSession = async () => {
+    const response = await axios.get('/api/session/todayActive', {
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    setActiveUsersToday(response.data)
+  }
   const getAverageActive = async (user) => {
     axios.get('/api/session/activeHistory/7', {
       headers: {
@@ -200,6 +215,9 @@ export default function Dashboard() {
             <Item>create times</Item>
           </Grid>
         </Grid>
+      </PageStack>
+      <PageStack>
+
       </PageStack>
       <PageStack>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} >

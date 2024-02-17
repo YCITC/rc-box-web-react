@@ -12,11 +12,14 @@ import { useAuth } from '../hooks/use-auth.jsx';
 import DeviceCard from '../components/device-card.jsx';
 import { useBroserInfo } from '../helper/browser-info.jsx';
 import { urlB64ToUint8Array } from '../helper/web-push-notify.jsx';
+import PageContainer from '../components/page-container.jsx';
+import Subtitle from '../components/subtitle.jsx';
+import PageStack from '../components/page-stack.jsx';
 
 
 export default function Devices() {
+  console.log('Devices')
   document.title = 'SHUOO A';
-  const navigate = useNavigate();
   const [devices, setDevices] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [openUnbindDialog, setOpenUnbindDialog] = useState(false);
@@ -130,51 +133,21 @@ export default function Devices() {
     });
   };
 
-  const containerStyle = {
-    position: 'static',
-    paddingTop: '10px',
-    // border: '2px dashed grey',
-    [theme.breakpoints.up('lg')]: {
-      maxWidth: '1190px',
-    },
-    [theme.breakpoints.up('sm')]: {
-      paddingRight: '5px',
-    },
-    [theme.breakpoints.down('sm')]: {
-      // paddingLeft: '50px',
-      width: '70%',
-      margin: '0 auto',
-    }
-  };
-  const subtitleStyle = {
-    padding: '0px 16px',
-    height: '1.5em',
-    lineHeight: '1.5em',
-  };
-  const stackStyle = {
-    width: '100%',
-    // [theme.breakpoints.up('lg')]: {
-    //   maxWidth: '1000px',
-    // }
-  };
   return (
-    <Container component="div" maxWidth="lg" sx={containerStyle}>
-      <h1 style={subtitleStyle}>
+    <PageContainer>
+      <Subtitle>
         Delivery Box
         <Tooltip title="Register A New One">
           <IconButton color="secondary" onClick={dialogOpenHandler} sx={{position: 'relative',left: '20px', top: '-2px'}}>
             <LibraryAddIcon fontSize="large" />
           </IconButton>
         </Tooltip>
-      </h1>
-      <Stack sx={stackStyle} direction='row' useFlexGap flexWrap="wrap" spacing={0}
-        alignItems="flex-start" justifyContent="flex-start"
-        className="devices-stack"
-      >
+      </Subtitle>
+      <PageStack>
         {renderDeviceList()}
-      </Stack>
+      </PageStack>
       <NewDeviceDialog open={openDialog} onClose={() => { setOpenDialog(false) }} callback={findAllByUser} />
       <UnbindDeviceConfirmDialog open={openUnbindDialog} device={theUnbindDevice} onClose={() => { setOpenUnbindDialog(false) }} onConfirm={async () => unBindTheDevice(theUnbindDevice)} reflashDevices={findAllByUser} />
-    </Container>
+    </PageContainer>
   );
 };

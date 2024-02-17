@@ -73,37 +73,12 @@ export const DashboardLayout = withAuthGuard(
       marginLeft: openNav?(mdUP?theme.layout.SIDE_NAV_WIDTH:0):0,
       marginTop: openNav?theme.layout.TOP_BAR_HEIGHT:0,
     }
-    const styleLayoutContainer = {
-      position: 'fixed',
-      right: 0,
-      bottom: 0,
-      [theme.breakpoints.up('md')]: {
-        right: openNav?theme.layout.SIDE_NAV_WIDTH:0,
-        top: openNav?theme.layout.TOP_BAR_HEIGHT:0,
-      }
-    }
-    const styledLayoutNav = {
-      
-    }
-    const handlePathnameChange = useCallback(
-      () => {
-        console.log('on handlePathnameChange, openNav: ', openNav);
-        if (openNav) {
-          setOpenNav(false);
-        }
-      },
-      [openNav]
-    );
-    
-    // useEffect(() => {
-    //   console.log('re render, openNav: ', openNav);
-    // }, [openNav])
-  
+
     useEffect(
       () => {
-        // console.log('[layout] pathname: ', pathname)
         switch (pathname) {
           case '/':
+          case '/dashboard':
           case '/devices':
           case '/delivery-logs':
           case '/oauth-redirect':
@@ -126,7 +101,6 @@ export const DashboardLayout = withAuthGuard(
   
     return (
       <>
-        {/* <AuthGuard pathname={pathname}> */}
           <TopBar onNavOpen={openNav} />
           <SideNav open={openNav} />
           <LayoutRoot sx={styleLayoutRoot} className="layout-root">
@@ -134,7 +108,6 @@ export const DashboardLayout = withAuthGuard(
               { children }
             </LayoutContainer>
           </LayoutRoot>
-        {/* </AuthGuard> */}
       </>
     );
   }

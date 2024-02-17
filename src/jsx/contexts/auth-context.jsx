@@ -125,12 +125,13 @@ export const AuthProvider = (props) => {
       sessionStorage.setItem('token', token);
       sessionStorage.setItem('tokenCreateTime', now.toISOString());
 
-      // console.log('[auth-context]: default');
       isAuthenticated = true;
       user = JSON.parse(localStorage.getItem('user'));
       token = sessionStorage.getItem('token');
+    } else {
+      navigate('/sign-in');
+      return;
     }
-    // console.log('[auth-context] isAuthenticated:', isAuthenticated)
 
     if (isAuthenticated) {
       dispatch({

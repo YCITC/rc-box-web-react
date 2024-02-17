@@ -40,6 +40,7 @@ export default function Dashboard() {
   const [activeUsers7Days, setActiveUsers7Days] = useState(0);
   const [activeUsersToday, setActiveUsersToday] = useState(null);
   const [activeUsersHistory, setActiveUsersHistory] = useState([]);
+  const [totalRegisteredUsers, setTotalRegisteredUsers] = useState(0);
   const [users, setUsers] = useState([]);
 
   const [pageInfo, setPageInfo] = useState({
@@ -106,15 +107,17 @@ export default function Dashboard() {
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + auth.token
       }
     });
     setActiveUsersToday(response.data)
   }
   const getAverageActive = async (user) => {
-    axios.get('/api/session/activeHistory/7', {
+    axios.get('/api/session/activeHistory/8', {
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + auth.token
       }
     })
     .then((response) => {
@@ -131,6 +134,7 @@ export default function Dashboard() {
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + auth.token
       }
     });
     let tempArray = [];
@@ -144,6 +148,7 @@ export default function Dashboard() {
         createTime: dayjs(user.createdTime).format('YYYY-MM-DD'),
       }
     })
+    setTotalRegisteredUsers(response.data?.meta?.totalItems)
     setPageInfo(response.data?.meta)
     setUsers(tempArray)
   }
@@ -158,6 +163,7 @@ export default function Dashboard() {
     padding: theme.spacing(1),
     textAlign: 'center',
     color: theme.palette.text.secondary,
+    overflow: 'hidden',
   }));
 
   const renderUsers = () => {
@@ -226,6 +232,9 @@ export default function Dashboard() {
       </PageStack>
       <PageStack>
         <Pagination count={pageInfo.totalPages} onChange={changePage}/>
+      </PageStack>
+      <PageStack>
+        Total registered users: {totalRegisteredUsers}
       </PageStack>
     </PageContainer>
   )

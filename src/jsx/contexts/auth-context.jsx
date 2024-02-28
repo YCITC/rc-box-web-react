@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useReducer, useRef } from "react";
-import { useNavigate, redirect } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import axios from "axios";
@@ -63,6 +63,7 @@ export const AuthProvider = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const initialized = useRef(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     // console.log('[auth-context] initialize')
@@ -101,13 +102,13 @@ export const AuthProvider = (props) => {
       return;
     }
 
+    console.log('initialize')
     initialized.current = true;
 
     let isAuthenticated = false;
     let token = null;
     let user = null;
     let timeString = sessionStorage.getItem('tokenCreateTime');
-
     if(timeString) {
       const tokenCreateTime = new Date(timeString);
       const now = new Date();
@@ -129,7 +130,11 @@ export const AuthProvider = (props) => {
       user = JSON.parse(localStorage.getItem('user'));
       token = sessionStorage.getItem('token');
     } else {
-      navigate('/sign-in');
+      if ( location.pathname === '/oauth-redirect') {
+        // console.log('location.pathname: ', location.pathname)
+      } else {
+        navigate('/sign-in');
+      }
       return;
     }
 

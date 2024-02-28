@@ -16,23 +16,17 @@ export default function OAuthRedirect() {
   const { search } = useLocation();
   const navigate = useNavigate();
   const [openBackdrop, setOpenBackdrop] = useState(true);
-  const auth = useAuth();
+  const auth = useAuth('google-oauth');
 
   useEffect(() =>{
     oauthLogin();
   }, [search])
   const oauthLogin = () => {
-    // console.log('OAuth Login');
-    // console.log(search)
-    // let params = new URLSearchParams(search);
-    // console.log(params)
-    // http://localhost:3000/api/auth/google/callback
     axios.get('/api/auth/google/callback'+search)
     .then((response) => {
-      // console.log('api resp: ', response.data);
       const user = response.data.user;
-      const token = response.data.access_token
-      
+      const token = response.data.accessToken
+
       auth.signIn(user, token);
       setOpenBackdrop(false);
       // console.log('[SingIn] user: ', user);
